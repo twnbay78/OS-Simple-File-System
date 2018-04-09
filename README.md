@@ -17,6 +17,7 @@ superblocks:
 FUNCTIONS
 
 You should implement the following system calls at minimum:
+
 0. int create(char* path)
 - Allocate disk space 
 	- check disk quotas
