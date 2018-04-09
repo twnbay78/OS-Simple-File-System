@@ -1,5 +1,6 @@
 # OS---Simple-File-System
 Implementing a very simple file system in USERspace using the FUSE library
+
 REQUIREMENTS:
 - 16MB MAX files
 - 128 files indexable
