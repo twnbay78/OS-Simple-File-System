@@ -5,20 +5,9 @@
 typedef struct _inode {
 	short int num;
 	char filename[16];
-	int size;
+	uint32_t size;
 	char permissions[3];
-	void* block_ptr1;
-	void* block_ptr2;
-	void* block_ptr3;
-	void* block_ptr4;
-	void* block_ptr5;
-	void* block_ptr6;
-	void* block_ptr7;
-	void* block_ptr8;
-	void* block_ptr9;
-	void* block_ptr10;
-	void* block_ptr11;
-	void* block_ptr12;
+	uint32_t blocks[15];
 	/* - indirection ptrs, worry about it later
  * 	void* single_indir_ptr;
  * 	void* double_indir_ptr;
@@ -39,4 +28,18 @@ typedef struct _open_fd {
 }open_fd;
 
 // file table for all files
+
+// superblock struct
+typedef struct _superblock {
+	uint32_t magic_num;
+	uint32_t num_of_inodes;
+	uint32_t num_of_data_blocks;
+	uint32_t max_num_of_files;
+	uint32_t max_num_of_blocks;
+	uint32_t block_size;
+	uint32_t start_of_inode_table;
+	uint32_t start_of_block_bitmap;
+	uint32_t start_of_inode_bitmap;
+	uint32_t start_of_data_block; // root node
+} superblock;
 #endif
