@@ -3,15 +3,16 @@
 
 // File descriptor (i-node)
 typedef struct _inode {
-	short int num;
-	char filename[16];
-	uint32_t size;
-	char permissions[3];
-	uint32_t blocks[15];
-	/* - indirection ptrs, worry about it later
- * 	void* single_indir_ptr;
- * 	void* double_indir_ptr;
- * 	*/
+        int16_t num;
+        int16_t isOpen;
+        char filename[16];
+        uint32_t parent;
+        uint32_t size;
+        uint32_t blocks[15];
+        /* - indirection ptrs, worry about it later
+ *      void* single_indir_ptr;
+ *      void* double_indir_ptr;
+ *      */
 }inode;
 
 // LL for free blocks

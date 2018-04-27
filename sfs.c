@@ -182,7 +182,57 @@ int sfs_read(const char *path, char *buf, size_t size, off_t offset, struct fuse
 	int retstat = 0;
 	log_msg("\nsfs_read(path=\"%s\", buf=0x%08x, size=%d, offset=%lld, fi=0x%08x)\n",
 			path, buf, size, offset, fi);
+	char buffers[512];
 
+	bufferlock_read(0,buffers);
+	superblock* sb = (superblock*)buffers;
+	
+	int x = 1;
+	int amountReadIN = 0; 
+	for (; x <sb->num_of_data_blocks; x++)
+	{
+		char buffer[512];
+		block_read(u,buffer);
+		inode* currentBlock = (inode*) buffer;
+
+		if(strcmp(current->path,path+1) == 0)
+		{
+			int numBlocksToRead = ((offset%512+size)-1+512)/512;
+			
+			int firstBlock = offset/512;
+
+			int lastBlock = firstBlock+numBlocksToRead;
+
+			int i = firstBlock;
+
+			 for(i;i<=lastBlock;i++) {
+
+                if(i<15) {
+                    char buffering[512];
+
+                    //initialize
+                    if(current->blocks[i]==-1) {
+                        return amountReadIN;
+                    }
+
+                    block_read(current->blocks[i], buffering);
+
+                    if(i==firstBlock) {
+
+                        memcpy(buf+amountReadIN,buffering+offset%512,512-offset%512);
+                        amountReadIN+=512-offset%512;
+                    } else if (i==lastBlock) {
+                        memcpy(buf+amountReadIN,buffering,size-amountReadIN);
+                       amountReadIN+=size-amountReadIN;
+                    }
+                    else {
+                        memcpy(buf+amountReadIN,buffering,512);
+                        amountReadIN+=512-offset%512;
+                     }
+                }
+
+		}
+	}
 
 	return retstat;
 }
@@ -273,8 +323,52 @@ int sfs_readdir(const char *path, void *buf, fuse_fill_dir_t filler, off_t offse
 		struct fuse_file_info *fi)
 {
 	int retstat = 0;
+	log_msg("\nreaddir has begun\n");
+	if(strcmp(path,"/") != 0 )
+	{
+		return -1;
+	}
 
+	filler(buf,".",NULL,0);
+	filler(buf,"..",NULL,0);
 
+	char* disk = SFS_DATA->diskfile;
+	char buffer[512];
+
+	bufferlock_read(0,buffer);
+	superblock* sb = (superblock*)buffer;
+
+	int rootD = sb->start_of_data_block;
+
+	block_read(rootD,buffer);
+	inode* rootDir = (inode*)buffer;
+ 
+
+    //Search through all the direct map ptrs
+    	int i=1;
+    	for(i;i<15;i++) {
+			log_msg("\nreaddir: inside first for loop\n");
+    		//block num referenced by ptr
+    		int blocknum = rootDir->blocks[i];
+			log_msg("entered 1st for loop");
+    		//if valid ptr
+    		if(blocknum > 0) {
+
+    			//read in inode
+    			char buffer2[512];
+    			block_read(blocknum,buffer2);
+    			inode* tempNode=(inode*)buffer2;
+			log_msg("\npath=\"%s\"\n",tempNode->path);
+    			//Compares paths for match
+
+    				if (filler(buf, tempNode->path, NULL, 0) != 0){
+					log_msg("\nerror returned: ENOMEM. When inserting file with path:\"%s\"\n",tempNode->path);
+        				return -ENOMEM;
+
+			    	log_msg("\npath=\"%s\"\n",tempNode->path);
+    			}
+    		}
+    	}
 	return retstat;
 }
 
