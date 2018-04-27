@@ -1,3 +1,7 @@
+# ignoring swap files
+.*
+!/.gitignore
+
 # Prerequisites
 *.d
 
