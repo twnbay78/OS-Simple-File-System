@@ -183,6 +183,52 @@ int sfs_read(const char *path, char *buf, size_t size, off_t offset, struct fuse
 	log_msg("\nsfs_read(path=\"%s\", buf=0x%08x, size=%d, offset=%lld, fi=0x%08x)\n",
 			path, buf, size, offset, fi);
 
+	int x = 1;
+	int amountReadIN = 0; 
+	for (; x < ; x++)
+	{
+		char buffer[512];
+		block_read(u,buffer);
+		inode* currentBlock = (inode*) buffer;
+
+		if(strcmp(current->path,path+1) == 0)
+		{
+			int numBlocksToRead = ((offset%512+size)-1+512)/512;
+			
+			int firstBlock = offset/512;
+
+			int lastBlock = firstBlock+numBlocksToRead;
+
+			int i = firstBlock;
+
+			 for(i;i<=lastBlock;i++) {
+
+                if(i<15) {
+                    char buffering[512];
+
+                    //initialize
+                    if(current->blocks[i]==-1) {
+                        return amountRead;
+                    }
+
+                    block_read(current->dblocks[i], buffering);
+
+                    if(i==firstBlock) {
+
+                        memcpy(buf+amountRead,buffer3+offset%512,512-offset%512);
+                        amountRead+=512-offset%512;
+                    } else if (i==lastBlock) {
+                        memcpy(buf+amountRead,buffer3,size-amountRead);
+                        amountRead+=size-amountRead;
+                    }
+                    else {
+                        memcpy(buf+amountRead,buffer3,512);
+                        amountRead+=512-offset%512;
+                     }
+                }
+
+		}
+	}
 
 	return retstat;
 }
