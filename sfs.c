@@ -182,10 +182,14 @@ int sfs_read(const char *path, char *buf, size_t size, off_t offset, struct fuse
 	int retstat = 0;
 	log_msg("\nsfs_read(path=\"%s\", buf=0x%08x, size=%d, offset=%lld, fi=0x%08x)\n",
 			path, buf, size, offset, fi);
+	char buffers[512];
 
+	bufferlock_read(0,buffers);
+	superblock* sb = (superblock*)buffers;
+	
 	int x = 1;
 	int amountReadIN = 0; 
-	for (; x < ; x++)
+	for (; x <sb->num_of_data_blocks; x++)
 	{
 		char buffer[512];
 		block_read(u,buffer);
@@ -208,22 +212,22 @@ int sfs_read(const char *path, char *buf, size_t size, off_t offset, struct fuse
 
                     //initialize
                     if(current->blocks[i]==-1) {
-                        return amountRead;
+                        return amountReadIN;
                     }
 
-                    block_read(current->dblocks[i], buffering);
+                    block_read(current->blocks[i], buffering);
 
                     if(i==firstBlock) {
 
-                        memcpy(buf+amountRead,buffer3+offset%512,512-offset%512);
-                        amountRead+=512-offset%512;
+                        memcpy(buf+amountReadIN,buffering+offset%512,512-offset%512);
+                        amountReadIN+=512-offset%512;
                     } else if (i==lastBlock) {
-                        memcpy(buf+amountRead,buffer3,size-amountRead);
-                        amountRead+=size-amountRead;
+                        memcpy(buf+amountReadIN,buffering,size-amountReadIN);
+                       amountReadIN+=size-amountReadIN;
                     }
                     else {
-                        memcpy(buf+amountRead,buffer3,512);
-                        amountRead+=512-offset%512;
+                        memcpy(buf+amountReadIN,buffering,512);
+                        amountReadIN+=512-offset%512;
                      }
                 }
 
