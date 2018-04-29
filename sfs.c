@@ -36,12 +36,12 @@
  *
  */
 
-void write_inode_table(inode* inode_table, superblock superblock_t) {
+void write_inode_table(inode* inode_table, superblock* superblock_t) {
 	
 	// writing inode table to fs file
 	int i = 0;
 	int q = 0;
-	for(i = superblock_t.start_of_inode_table; i < superblock_t.start_of_data_block; ++i){
+	for(i = superblock_t->start_of_inode_table; i < superblock_t->start_of_data_block; ++i){
 		for(q = 0; q < 32; ++q){
 			int j = disk_write(i, inode_table[q]);
 			if (j < 1){
@@ -52,14 +52,14 @@ void write_inode_table(inode* inode_table, superblock superblock_t) {
 	free(inode_table);
 }
 
-inode* load_inode_table(superblock superblock_t) {
+inode* load_inode_table(superblock* superblock_t) {
 	
-	inode* inode_table = (inode*)malloc(sizeof(inode) * superblock_t.num_of_inodes);
+	inode* inode_table = (inode*)malloc(sizeof(inode) * superblock_t->num_of_inodes);
 
 	// load inode table into disk file
 	int i = 0;
 	int q = 0;
-	for(i = superblock_t.start_of_inode_table; i < superblock_t.start_of_data_block; ++i){
+	for(i = superblock_t->start_of_inode_table; i < superblock_t->start_of_data_block; ++i){
 		inode* temp = (inode*)malloc(sizeof(inode) * 32);
 		int j = disk_read(i, temp);
 		if (j < 0){
@@ -157,13 +157,7 @@ void *sfs_init(struct fuse_conn_info *conn)
 
 	disk_open(disk);
 
-	// writing inode table to fs file
-	int q = 0;
-	for(i = 3; i < 11; ++i){
-		for(q = 0; q < 32; ++q){
-			disk_write(i, inode_table[q]);
-		}
-	}
+	write_inode_table(inode_table, superblock_t);
 	
 	return SFS_DATA;
 }
