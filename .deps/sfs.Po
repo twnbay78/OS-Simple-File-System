@@ -31,7 +31,8 @@ sfs.o: sfs.c /usr/include/stdc-predef.h params.h \
  /usr/include/bits/stdlib-float.h /usr/include/string.h \
  /usr/include/bits/string.h /usr/include/bits/string2.h \
  /usr/include/unistd.h /usr/include/bits/posix_opt.h \
- /usr/include/bits/environments.h /usr/include/bits/confname.h log.h
+ /usr/include/bits/environments.h /usr/include/bits/confname.h \
+ structures.h log.h
 
 /usr/include/stdc-predef.h:
 
@@ -174,5 +175,7 @@ fuse.h:
 /usr/include/bits/environments.h:
 
 /usr/include/bits/confname.h:
+
+structures.h:
 
 log.h:

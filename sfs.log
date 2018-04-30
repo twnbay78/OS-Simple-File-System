@@ -19,3 +19,5 @@ sfs_init()
     umask = 00000
 
 sfs_getattr(path="/", statbuf=0xe2b9dc10)
+
+sfs_destroy(userdata=0x016fd010)

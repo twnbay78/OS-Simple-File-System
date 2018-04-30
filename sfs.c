@@ -46,16 +46,15 @@
  */
 int write_inode_table(inode* inode_table, superblock* superblock_t) {
 
-	char buffer[4096];
 
 	// writing inode table to fs file
 	int i = 0;
 	int q = 0;
 	for(i = superblock_t->start_of_inode_table; i < superblock_t->start_of_data_block; ++i){
 		for(q = 0; q < 32; ++q){
-			int j = block_write(i, buffer);
-			inode* temp = (inode*)buffer;
-			inode_table[q] = *temp;
+			inode* temp = (inode*)malloc(sizeof(inode));
+			temp = &inode_table[q];
+			int j = block_write(i, temp);
 			if (j < 1){
 				log_msg("error trying to write inode table to block\n");
 				return -1; 
@@ -75,13 +74,15 @@ int write_inode_table(inode* inode_table, superblock* superblock_t) {
 inode* load_inode_table(superblock* superblock_t) {
 
 	inode* inode_table = (inode*)malloc(sizeof(inode) * superblock_t->num_of_inodes);
+	char* buffer[4096];
 
 	// load inode table into disk file
 	int i = 0;
 	int q = 0;
 	for(i = superblock_t->start_of_inode_table; i < superblock_t->start_of_data_block; ++i){
 		inode* temp = (inode*)malloc(sizeof(inode) * 32);
-		int j = disk_read(i, temp);
+		int j = block_read(i, buffer);
+		temp = (inode*)buffer;
 		if (j < 0){
 			log_msg("error trying to write inode table to block\n");
 			return NULL;
@@ -92,9 +93,8 @@ inode* load_inode_table(superblock* superblock_t) {
 		}
 
 		for(q = 0; q < 32; ++q){
-			inode_table[q + ((i*32)-1)] = temp[q]; 
+			inode_table[q + ((i-(superblock_t->start_of_inode_table)*32))] = temp[q]; 
 		}		
-		free(temp);
 	}
 
 	log_msg("inode table is loaded\n");
@@ -334,7 +334,7 @@ int sfs_getattr(const char *path, struct stat *statbuf)
 	char fpath[PATH_MAX];
 	log_msg("\nsfs_getattr(path=\"%s\", statbuf=0x%08x)\n",
 			path, statbuf);
-char buffers[512];
+char buffers[4096];
 	// read in superblock
  block_read(0, buffers);
 	superblock* superblock_t = (superblock*) buffers;
@@ -351,7 +351,7 @@ char buffers[512];
 		statbuf->st_mode = S_IFDIR | 0755;
 		statbuf->st_size=root.size;
 		statbuf->st_nlink = 1;
-		statbuf->st_blocks=((root.size-1)+512)/512;
+		statbuf->st_blocks=((root.size-1)+4096)/4096;
 		return retstat;
 	}
 
@@ -359,7 +359,7 @@ char buffers[512];
 		//Get the disk path
 		char* disk=SFS_DATA->diskfile;
 		//buffer to read into
-		char buffer[512];
+		char buffer[4096];
 
 		//Read in the root node
 		inode rootDir=inode_table[0];
@@ -379,7 +379,7 @@ char buffers[512];
 					statbuf->st_nlink = 2;
 					statbuf->st_mode = S_IFDIR | 0777;
 					statbuf->st_size=temp.size;
-					statbuf->st_blocks=((temp.size-1)+512)/512;
+					statbuf->st_blocks=((temp.size-1)+4096)/4096;
 					return retstat;
 				}
 			}
@@ -433,7 +433,7 @@ int sfs_create(const char *path, mode_t mode, struct fuse_file_info *fi){
 
 	//retrieve superblock
 	char sbuf[BLOCK_SIZE];
-	superblock *s = (superblock *)malloc(sizeof(superblock));//FREE
+	superblock *s;
 	block_read(0,sbuf);
 	s=(superblock *)sbuf;
 	int it_start = 0;
@@ -442,7 +442,6 @@ int sfs_create(const char *path, mode_t mode, struct fuse_file_info *fi){
 	iposition=find_inode(s);
 	dposition=find_block(s);
 	if (iposition==-1 || dposition==-1){
-		free(s);
 		log_msg("failure in create with invalid space left\n");
 		return -1;
 	}
@@ -463,7 +462,6 @@ int sfs_create(const char *path, mode_t mode, struct fuse_file_info *fi){
 			if (strcmp(table[i].filename,token)==0 && table[i].parent==0){//filenames match and rootdir is parent (inum=0?)
 				//BADDD it EXISTS!!!
 				log_msg("failure in create: FILE EXISTS\n");
-				free(s);
 				free(table);
 				return -1;
 			}
@@ -490,14 +488,13 @@ int sfs_create(const char *path, mode_t mode, struct fuse_file_info *fi){
 		//modify data block bitmap
 
 		//writing back to disk
-		disk_write(0,s);//write superblock back
+		block_write(0,s);//write superblock back
 		//write bitmaps back
 		if(write_inode_table(table,s) == -1){
 			log_msg("could not write inode table to disk in create\n");
 			return -1;
 		}//write back to disk
 		free(table);
-		free(s);//free stuff
 		log_msg("create is a success with path: %s\n",path);
 		return 0;
 	}
@@ -537,7 +534,7 @@ int sfs_unlink(const char *path){
 		return -1;
 	}
 	//load in inode table
-	table=(inode *)malloc(s->max_num_of_files*sizeof(inode));
+	table=(inode *)malloc(s->num_of_inodes*sizeof(inode));
 	table = load_inode_table(s);
 	//load in block bitmap
 	int* block_bitmap = (int*)malloc(sizeof(int) * 1024);
@@ -565,7 +562,7 @@ int sfs_unlink(const char *path){
 	int blocksfreed=0; 
 	
 	if (slashcount==1){//root parent case
-		for (i=0;i<s->max_num_of_files;i++){//iterate thru inode table block nums
+		for (i=0;i<s->num_of_inodes;i++){//iterate thru inode table block nums
 			if (strcmp(table[i].filename,token)==0 && table[i].parent==0){//filenames match and rootdir is parent (inum=0?)
 				//update inode
 				table[i].isOpen=IS_CLOSED;//close it 
@@ -660,7 +657,7 @@ int sfs_open(const char *path, struct fuse_file_info *fi){
 
 	//retrieve superblock
 	char sbuf[BLOCK_SIZE];
-	superblock *s = (superblock *)malloc(sizeof(superblock));
+	superblock *s;
 	block_read(0,sbuf);
 	s=(superblock *)sbuf;
 	int it_start = 0;
@@ -682,13 +679,11 @@ int sfs_open(const char *path, struct fuse_file_info *fi){
 				if(write_inode_table(table,s) == -1){
 					return -1;
 				}
-				free(s);
 				log_msg("open is successful with path: %s\n",path);
 				return 0;
 			}
 		}
 		free(table);
-		free(s);
 		log_msg("open is a failure with path: %s\n",path);
 		return -1;
 	}else{//othercases that are deeper than rootdir
@@ -748,7 +743,7 @@ int sfs_release(const char *path, struct fuse_file_info *fi)
 	log_msg("\nsfs_release(path=\"%s\", fi=0x%08x)\n",
 			path, fi);
 
-	if(strmp(path, "/") == 0){
+	if(strcmp(path, "/") == 0){
 		log_msg("you done goofed, you tried to file release the root dir!\n");
 		return;-1;
 	}
@@ -808,7 +803,7 @@ int sfs_read(const char *path, char *buf, size_t size, off_t offset, struct fuse
 	int retstat = 0;
 	log_msg("\nsfs_read(path=\"%s\", buf=0x%08x, size=%d, offset=%lld, fi=0x%08x)\n",
 			path, buf, size, offset, fi);
-			char bufferss[512];
+			char bufferss[4096];
 	int z = block_read(0, bufferss);
 	if (z < 0)
 		log_msg("error trying to write inode table to block\n");
@@ -830,9 +825,9 @@ superblock* superblock_t = (superblock*) bufferss;
 
 	   if(strcmp(r.filename,path+1) == 0)
 	   {
-	   int numBlocksToRead = ((offset%512+size)-1+512)/512;
+	   int numBlocksToRead = ((offset%4096+size)-1+4096)/4096;
 
-	   int firstBlock = offset/512;
+	   int firstBlock = offset/4096;
 
 	   int lastBlock = firstBlock+numBlocksToRead;
 
@@ -841,7 +836,7 @@ superblock* superblock_t = (superblock*) bufferss;
 	   for(i;i<=lastBlock;i++) {
 
 	   if(i<15) {
-	   char buffer3[512];
+	   char buffer3[4096];
 
 	//initialize
 				if(r.blocks[i]==-1) {
@@ -852,16 +847,16 @@ superblock* superblock_t = (superblock*) bufferss;
 
 	if(i==firstBlock) {
 
-	memcpy(buf+amountRead,buffer3+offset%512,512-offset%512);
-	amountRead+=512-offset%512;
+	memcpy(buf+amountRead,buffer3+offset%4096,4096-offset%4096);
+	amountRead+=4096-offset%4096;
 	} 
 	else if (i==lastBlock) {
 	memcpy(buf+amountRead,buffer3,size-amountRead);
 	amountRead+=size-amountRead;
 	}
 	else {
-	memcpy(buf+amountRead,buffer3,512);
-	amountRead+=512-offset%512;
+	memcpy(buf+amountRead,buffer3,4096);
+	amountRead+=4096-offset%4096;
 	}
 	}
 
@@ -887,7 +882,7 @@ int sfs_write(const char *path, const char *buf, size_t size, off_t offset,
 	log_msg("\nsfs_write(path=\"%s\", buf=0x%08x, size=%d, offset=%lld, fi=0x%08x)\n",
 			path, buf, size, offset, fi);
 	int u=0;
-	char buffers[512];
+	char buffers[4096];
 	// read in superblock
 	block_read(0, buffers);
 	superblock* superblock_t = (superblock*) buffers;
@@ -903,9 +898,9 @@ int sfs_write(const char *path, const char *buf, size_t size, off_t offset,
 		{
 		root.size = root.size+offset+size-temp.size;		
 		
-		int numBlockToWrite=((offset%512+size)-1+512)/512;
+		int numBlockToWrite=((offset%4096+size)-1+4096)/4096;
 	
-		int firstBlock = offset/512;
+		int firstBlock = offset/4096;
 	
 		int lastBlock = firstBlock+numBlockToWrite;
 	
@@ -918,7 +913,7 @@ int sfs_write(const char *path, const char *buf, size_t size, off_t offset,
 			
 			if(i<15)
 			{
-			char buffers[512];
+			char buffers[4096];
 			//init
 			if(temp.blocks[i]==-1)
 				{
@@ -930,17 +925,17 @@ int sfs_write(const char *path, const char *buf, size_t size, off_t offset,
 			block_read(temp.blocks[i],buffers);
 			if(i == firstBlock)
 				{
-			int writeSize = 512-offset%512;
+			int writeSize = 4096-offset%4096;
 				if(writeSize>size)
 					{
 					writeSize = size;					
 					}				
 					
-			memcpy(buffers+offset%512,buf + amountWrite,writeSize);
+			memcpy(buffers+offset%4096,buf + amountWrite,writeSize);
 			amountWrite+=writeSize;
 				}
 				else {
-						int writeSize=512;
+						int writeSize=4096;
     					if(amountWrite+writeSize>size) {
     						writeSize=size-amountWrite;
     					}
@@ -970,9 +965,9 @@ int sfs_opendir(const char *path, struct fuse_file_info *fi)
 			path, fi);
 	int i=0;
 	int found=0;
-	char buffer[512];
+	char buffer[4096];
 	//load root node into root
-	char buffers[512];
+	char buffers[4096];
 	// read in superblock
 	block_read(0, buffers);
 	superblock* superblock_t = (superblock*) buffers;
@@ -1042,7 +1037,7 @@ int sfs_readdir(const char *path, void *buf, fuse_fill_dir_t filler, off_t offse
 	filler(buf,"..",NULL,0);
 
 	char* disk = SFS_DATA->diskfile;
-	char buffers[512];
+	char buffers[4096];
 	// read in superblock
  block_read(0, buffers);
 	superblock* superblock_t = (superblock*) buffers;
@@ -1087,7 +1082,7 @@ int sfs_releasedir(const char *path, struct fuse_file_info *fi)
 	int retstat = 0;
 	log_msg("\nsfs_releasedir(path=\"%s\", fi=0x%08x)\n",
 			path, fi);
-	char buffer[512];
+	char buffer[4096];
 	inode * root = (inode *) buffer;
 	block_read(14,root);
 	if(strcmp(path, root->filename) == 0){
