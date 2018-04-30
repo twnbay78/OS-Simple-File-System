@@ -208,8 +208,8 @@ int numslash(const char *path){
 					return -1;
 				}
 			}
-		slashcount++;
-		lastslashind=i;
+			slashcount++;
+			lastslashind=i;
 		}	
 	}
 	return slashcount;
@@ -328,15 +328,15 @@ int sfs_getattr(const char *path, struct stat *statbuf)
 	char fpath[PATH_MAX];
 	log_msg("\nsfs_getattr(path=\"%s\", statbuf=0x%08x)\n",
 			path, statbuf);
-char buffers[512];
+	char buffers[512];
 	// read in superblock
- block_read(0, buffers);
+	block_read(0, buffers);
 	superblock* superblock_t = (superblock*) buffers;
-		// read in inode_table
+	// read in inode_table
 	inode* inode_table = load_inode_table(superblock_t);
 	if(inode_table == NULL){
 		log_msg("inode table returned -1 in getattr\n");
-	return -1;
+		return -1;
 	}
 	inode root=inode_table[0];
 
@@ -379,7 +379,7 @@ char buffers[512];
 			}
 		}
 	}
-	
+
 	// write changes to inode_table into the fs file
 	if(write_inode_table(inode_table, superblock_t) == -1){
 		log_msg("could not write inode_table to fs file\n");
@@ -664,7 +664,7 @@ int sfs_release(const char *path, struct fuse_file_info *fi)
 			log_msg("error trying to write inode table to block\n");
 		else if (z == 0)
 			log_msg("while reading inode table block, blocks are empty\n");
-		
+
 		// get filename, -1 for null terminator + -1 for root '/'
 		char* filename = (char*)malloc(sizeof(path)-2); 
 		memcpy(filename, (path+1), (sizeof(path)-2));
@@ -710,13 +710,13 @@ int sfs_read(const char *path, char *buf, size_t size, off_t offset, struct fuse
 	int retstat = 0;
 	log_msg("\nsfs_read(path=\"%s\", buf=0x%08x, size=%d, offset=%lld, fi=0x%08x)\n",
 			path, buf, size, offset, fi);
-			char bufferss[512];
+	char bufferss[512];
 	int z = block_read(0, bufferss);
 	if (z < 0)
 		log_msg("error trying to write inode table to block\n");
 	else if (z == 0)
 		log_msg("while reading inode table block, blocks are empty\n");
-superblock* superblock_t = (superblock*) bufferss;
+	superblock* superblock_t = (superblock*) bufferss;
 	// read in inode_table
 	inode* inode_table = load_inode_table(superblock_t);
 	if(inode_table == NULL){
@@ -724,53 +724,53 @@ superblock* superblock_t = (superblock*) bufferss;
 		return -1;
 	}
 	inode r = inode_table[0];
-	   int x = 1;
-	   int amountRead = 0; 
-	   for (; x <superblock_t->num_of_inodes ; x++)
-	   {
-	   inode r = inode_table[x];
+	int x = 1;
+	int amountRead = 0; 
+	for (; x <superblock_t->num_of_inodes ; x++)
+	{
+		inode r = inode_table[x];
 
-	   if(strcmp(r.filename,path+1) == 0)
-	   {
-	   int numBlocksToRead = ((offset%512+size)-1+512)/512;
+		if(strcmp(r.filename,path+1) == 0)
+		{
+			int numBlocksToRead = ((offset%512+size)-1+512)/512;
 
-	   int firstBlock = offset/512;
+			int firstBlock = offset/512;
 
-	   int lastBlock = firstBlock+numBlocksToRead;
+			int lastBlock = firstBlock+numBlocksToRead;
 
-	   int i = firstBlock;
+			int i = firstBlock;
 
-	   for(i;i<=lastBlock;i++) {
+			for(i;i<=lastBlock;i++) {
 
-	   if(i<15) {
-	   char buffer3[512];
+				if(i<15) {
+					char buffer3[512];
 
-	//initialize
-				if(r.blocks[i]==-1) {
-				return amountRead;
+					//initialize
+					if(r.blocks[i]==-1) {
+						return amountRead;
+					}
+
+					block_read(r.blocks[i], buffer3);
+
+					if(i==firstBlock) {
+
+						memcpy(buf+amountRead,buffer3+offset%512,512-offset%512);
+						amountRead+=512-offset%512;
+					} 
+					else if (i==lastBlock) {
+						memcpy(buf+amountRead,buffer3,size-amountRead);
+						amountRead+=size-amountRead;
+					}
+					else {
+						memcpy(buf+amountRead,buffer3,512);
+						amountRead+=512-offset%512;
+					}
 				}
 
-	block_read(r.blocks[i], buffer3);
-
-	if(i==firstBlock) {
-
-	memcpy(buf+amountRead,buffer3+offset%512,512-offset%512);
-	amountRead+=512-offset%512;
-	} 
-	else if (i==lastBlock) {
-	memcpy(buf+amountRead,buffer3,size-amountRead);
-	amountRead+=size-amountRead;
-	}
-	else {
-	memcpy(buf+amountRead,buffer3,512);
-	amountRead+=512-offset%512;
-	}
+			}
+		}
 	}
 
-	}
-	}
-	}
-	
 	return amountRead;
 }
 
@@ -838,7 +838,7 @@ int sfs_opendir(const char *path, struct fuse_file_info *fi)
 	// read in superblock
 	block_read(0, buffers);
 	superblock* superblock_t = (superblock*) buffers;
-		// read in inode_table
+	// read in inode_table
 
 	inode* inode_table = load_inode_table(superblock_t);
 
@@ -906,13 +906,13 @@ int sfs_readdir(const char *path, void *buf, fuse_fill_dir_t filler, off_t offse
 	char* disk = SFS_DATA->diskfile;
 	char buffers[512];
 	// read in superblock
- block_read(0, buffers);
+	block_read(0, buffers);
 	superblock* superblock_t = (superblock*) buffers;
-		// read in inode_table
+	// read in inode_table
 	inode* inode_table = load_inode_table(superblock_t);
 	if(inode_table == NULL){
 		log_msg("inode table returned -1 in readdir\n");
-	return -1;
+		return -1;
 	}
 	inode root = inode_table[0];
 	int cp = root.num;
