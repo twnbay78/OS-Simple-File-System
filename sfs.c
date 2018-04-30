@@ -51,7 +51,7 @@ int write_inode_table(inode* inode_table, superblock* superblock_t) {
 	int q = 0;
 	for(i = superblock_t->start_of_inode_table; i < superblock_t->start_of_data_block; ++i){
 		for(q = 0; q < 32; ++q){
-			int j = disk_write(i, inode_table[q]);
+			int j = block_write(i, inode_table[q]);
 			if (j < 1){
 				log_msg("error trying to write inode table to block\n");
 				return -1; 
@@ -299,7 +299,6 @@ void *sfs_init(struct fuse_conn_info *conn)
 	free(superblock_t);
 	free(inode_bitmap);
 	free(block_bitmap);
-	free(inode_table);
 
 	return SFS_DATA;
 }
@@ -394,7 +393,6 @@ int sfs_getattr(const char *path, struct stat *statbuf)
 		return -1;
 	}
 
-	free(inode_table);
 	return -ENOENT;
 }
 
@@ -463,7 +461,7 @@ int sfs_create(char *path){
 		}
 		//check if file exists
 		for (i=it_start;i<it_end;i++){//iterate thru inode table block nums
-			if (strcmp(table[i]->filename,token)==0 && table[i]->parent==0){//filenames match and rootdir is parent (inum=0?)
+			if (strcmp(table[i].filename,token)==0 && table[i].parent==0){//filenames match and rootdir is parent (inum=0?)
 				//BADDD it EXISTS!!!
 				log_msg("failure in create: FILE EXISTS\n");
 				free(s);
@@ -478,15 +476,15 @@ int sfs_create(char *path){
 		//modify bitmaps with indices: dposition, iposition
 
 		//initialize new inode
-		table[i]->num=iposition;
-		table[i]->type=IS_FILE;
-		table[i]->isOpen=IS_OPEN;//open it 
-		strcpy(table[i]->filename,token);
-		table[i]->parent=0;
-		table[i]->size=0;
-		table[i]->blocks[0]=dposition;
-		table[i]->single_indir_ptr=NULL;
-		table[i]->double_indir_ptr=NULL;
+		table[i].num=iposition;
+		table[i].type=IS_FILE;
+		table[i].isOpen=IS_OPEN;//open it 
+		strcpy(table[i].filename,token);
+		table[i].parent=0;
+		table[i].size=0;
+		table[i].blocks[0]=dposition;
+		table[i].single_indir_ptr=NULL;
+		table[i].double_indir_ptr=NULL;
 
 		//modify inode bitmap
 
@@ -501,10 +499,9 @@ int sfs_create(char *path){
 		}//write back to disk
 		free(table);
 		free(s);//free stuff
-		log_msg("open is a failure with path: %s\n",path);
+		log_msg("create is a success with path: %s\n",path);
 		return 0;
 	}
-
 
 
 }
@@ -570,8 +567,8 @@ int sfs_open(const char *path){
 			log_msg("inode_table returned NULL in open\n");
 		}
 		for (i=it_start;i<it_end;i++){//iterate thru inode table block nums
-			if (strcmp(table[i]->filename,token)==0 && table[i]->parent==0){//filenames match and rootdir is parent (inum=0?)
-				table[i]->isOpen=IS_OPEN;//open it 
+			if (strcmp(table[i].filename,token)==0 && table[i].parent==0){//filenames match and rootdir is parent (inum=0?)
+				table[i].isOpen=IS_OPEN;//open it 
 				//write back
 				if(write_inode_table(table,s) == -1){
 					return -1;
@@ -619,7 +616,6 @@ int sfs_open(const char *path){
 		log_msg("could not write inode_table to disk\n");
 		return -1;
 	}
-
 
 }
 
