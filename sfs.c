@@ -30,7 +30,11 @@
 
 #include "log.h"
 
-/* HELPER FUNCTIONS - inode functions
+#define SetBit(A,k)     ( A[(k/32)] |= (1 << (k%32)) )
+#define ClearBit(A,k)   ( A[(k/32)] &= ~(1 << (k%32)) )
+#define TestBit(A,k)    ( A[(k/32)] & (1 << (k%32)) )
+
+/* HELPER FUNCTIONS - inode table functions
  *
  *
  *
@@ -40,8 +44,8 @@
  * Takes in an inode table and writes the table to the disk. The only error checking the inode table does is with disk_write,
  * and will log messages if the disk could not be written to
  */
-void write_inode_table(inode* inode_table, superblock* superblock_t) {
-	
+int write_inode_table(inode* inode_table, superblock* superblock_t) {
+
 	// writing inode table to fs file
 	int i = 0;
 	int q = 0;
@@ -49,12 +53,14 @@ void write_inode_table(inode* inode_table, superblock* superblock_t) {
 		for(q = 0; q < 32; ++q){
 			int j = disk_write(i, inode_table[q]);
 			if (j < 1){
-				log_msg("error trying to write inode table to block");
+				log_msg("error trying to write inode table to block\n");
+				return -1; 
 			}
 		}	
 	}
 	free(inode_table);
-	log_msg("inode table is loaded");
+	log_msg("inode table is loaded\n");
+	return 0;
 }
 
 /*
@@ -63,7 +69,7 @@ void write_inode_table(inode* inode_table, superblock* superblock_t) {
  * the blocks read are empty or if the blocks cannot be read.
  */
 inode* load_inode_table(superblock* superblock_t) {
-	
+
 	inode* inode_table = (inode*)malloc(sizeof(inode) * superblock_t->num_of_inodes);
 
 	// load inode table into disk file
@@ -73,42 +79,24 @@ inode* load_inode_table(superblock* superblock_t) {
 		inode* temp = (inode*)malloc(sizeof(inode) * 32);
 		int j = disk_read(i, temp);
 		if (j < 0){
-			log_msg("error trying to write inode table to block");
-		}else if (j == 0){
-			log_msg("while reading inode table block, blocks are empty");
+			log_msg("error trying to write inode table to block\n");
+			return NULL;
 		}
+		else if (j == 0){
+			log_msg("while reading inode table block, blocks are empty\n");
+			return NULL;
+		}
+
 		for(q = 0; q < 32; ++q){
 			inode_table[q + ((i*32)-1)] = temp[q]; 
 		}		
 		free(temp);
 	}
-	
-	log_msg("inode table is loaded");
+
+	log_msg("inode table is loaded\n");
 	return inode_table;
 }
 
-/*
- * This function searches the inode_bitmap and returns an index number of the first found free inode
- * If a free inode cannot be found, whether there are no more free inodes or undefined behavior occurs, the function will return -1. 
- */
-int find_inode(superblock* superblock_t){
-	
-	inode* inode_table = load_inode_table(superblock_t);
-	
-	// load in bitmap
-	int* inode_bitmap;
-	block_read(superblock_t->inode_bitmap, inode_bitmap);
-
-	return -1;
-}	
-
-/*
- * This function searches the block bitmap for a free block. The block number is returned.
- * If a free block cannot be found, whether there are no more free blocks or undefined behavior occurs, the function will return -1.
- */
-int find_block(
-
-}
 
 /* HELPER FUNCTIONS - Bitmap Functions
  *
@@ -116,8 +104,116 @@ int find_block(
  *
  */
 
+/*
+ * This function searches the inode_bitmap and returns an index number of the first found free inode, also sets the bit
+ * If a free inode cannot be found, whether there are no more free inodes or undefined behavior occurs, the function will return -1. 
+ */
+int find_inode(superblock* superblock_t){
+
+	// load in bitmap
+	int* inode_bitmap = (int*)malloc(sizeof(int) * 1024);
+	int j = block_read(superblock_t->start_of_inode_bitmap, inode_bitmap);
+	if (j < 0){
+		log_msg("error trying to write inode table to block\n");
+		return -1;
+	}
+	else if (j == 0){
+		log_msg("while reading inode table block, blocks are empty\n");
+		return -1;
+	}
+
+	// find free inode in inode_bitmap
+	int i = 0;
+	for(i = 0; i < superblock_t->num_of_inodes; ++i){
+		if(TestBit(inode_bitmap, i)){
+			log_msg("found a free inode\n");
+			// set bit because it is no longer free
+			SetBit(inode_bitmap, i);
+			// write bitmap back to fs file, error check
+			j = block_write(superblock_t->start_of_inode_bitmap, inode_bitmap);
+			if (j < 1)
+				log_msg("error trying to write inode table to block\n");
+			free(inode_bitmap);
+			return i;	
+		}
+	}
+	log_msg("could not find a free inode\n");
+	free(inode_bitmap);
+	return -1;
+}	
+
+/*
+ * This function searches the block bitmap for a free block. The block number is returned, and the bit is set in the bitmap
+ * If a free block cannot be found, whether there are no more free blocks or undefined behavior occurs, the function will return -1.
+ */
+int find_block(superblock* superblock_t){
+
+	// load in bitmap
+	int* block_bitmap = (int*)malloc(sizeof(int) * 1024);
+	int j = block_read(superblock_t->start_of_block_bitmap, block_bitmap);
+	if (j < 0){
+		log_msg("error trying to write inode table to block\n");
+		return -1;
+	}
+	else if (j == 0){
+		log_msg("while reading inode table block, blocks are empty\n");
+		return -1;
+	}
 
 
+	// find free block in block_bitmap
+	int i = 0;
+	for(i = 0; i < superblock_t->num_of_data_blocks; ++i){
+		if(TestBit(block_bitmap, i)){
+			log_msg("found a free block\n");
+			// set bit because it is no longer free
+			SetBit(block_bitmap, i);
+			// write bitmap back to fs file, error check
+			j = block_write(superblock_t->start_of_block_bitmap, block_bitmap);
+			if (j < 1)
+				log_msg("error trying to write inode table to block\n");
+			free(block_bitmap);
+			return i;	
+		}
+
+	}
+
+	log_msg("could not find a free block\n");
+	free(block_bitmap);
+	return -1;
+}
+
+/* HELPER FUNCTIONS - parser functions
+ *
+ *
+ *
+ */
+
+//ALL YOUR SLASHING NEEDS:
+//returns number of slashes found in given path
+//returns -1 if consecutive slashes or no beginning slash or has an ending slash
+int numslash(const char *path){
+	int pathlen = strlen(path);
+	int slashcount=0;
+	int lastslashind=-1;//make sure no consecutive slashes
+	int i;//loop
+	if (path[pathlen-1]=='/'||path[0]!='/')//path must begin with a slash and NOT end with a slash
+		return -1;
+	for (i=0;i<pathlen;i++){
+		if (path[i]=='/'){
+			if (lastslashind==-1){
+				lastslashind=i;
+			}else{
+				if (i-1==lastslashind){
+					return -1;
+				}
+			}
+		slashcount++;
+		lastslashind=i;
+		}	
+	}
+	return slashcount;
+}
 
 ///////////////////////////////////////////////////////////
 //
@@ -143,59 +239,68 @@ void *sfs_init(struct fuse_conn_info *conn)
 	char* disk=state->diskfile;
 	log_conn(conn);
 	log_fuse_context(fuse_get_context());
-	
+
 	// Create superblock struct
-        superblock* superblock_t = (superblock*)malloc(sizeof(superblock));
-        superblock_t->magic_num = 69;
-        superblock_t->num_of_inodes = 256;
-        superblock_t->num_of_data_blocks = 4085;
-        superblock_t->max_num_of_files = 256;
-        superblock_t->max_num_of_blocks = 87;
-        superblock_t->block_size = 4096;
-        superblock_t->start_of_inode_table = 3;
-        superblock_t->start_of_block_bitmap = 2;
-        superblock_t->start_of_inode_bitmap = 1;
-        superblock_t->start_of_data_block = 11;
+	superblock* superblock_t = (superblock*)malloc(sizeof(superblock));
+	superblock_t->magic_num = 69;
+	superblock_t->num_of_inodes = 256;
+	superblock_t->num_of_data_blocks = 4085;
+	superblock_t->max_num_of_files = 256;
+	superblock_t->max_num_of_blocks = 87;
+	superblock_t->block_size = 4096;
+	superblock_t->start_of_inode_table = 3;
+	superblock_t->start_of_block_bitmap = 2;
+	superblock_t->start_of_inode_bitmap = 1;
+	superblock_t->start_of_data_block = 11;
 
 
-        // declare bitmaps and set all to 0 indicating open
-        int* inode_bitmap = (int*)malloc(sizeof(int) * 1024);
-        int i;
-        for(i = 0; i < 1024; ++i){
-                inode_bitmap[i] = 0;
-        }
-        int* block_bitmap = (int*)malloc(sizeof(int) * 1024);
-        for(i = 0; i < 1024; ++i){
-                block_bitmap[i] = 0;
-        }
+	// declare bitmaps and set all to 0 indicating open
+	int* inode_bitmap = (int*)malloc(sizeof(int) * 1024);
+	int i;
+	for(i = 0; i < 1024; ++i){
+		inode_bitmap[i] = 0;
+	}
+	int* block_bitmap = (int*)malloc(sizeof(int) * 1024);
+	for(i = 0; i < 1024; ++i){
+		block_bitmap[i] = 0;
+	}
 
-        // declare inode table
+	// declare inode table
 	inode* inode_table = (inode*)malloc(sizeof(inode)*256);
 
-        // root dir
+	// root dir
 	memcpy(inode_table[0].filename, "/", 1);
-        inode_table[0].num = 0;
-        inode_table[0].type = IS_DIR;
-        inode_table[0].isOpen = IS_CLOSED;
-        inode_table[0].size = 0;
+	inode_table[0].num = 0;
+	inode_table[0].type = IS_DIR;
+	inode_table[0].isOpen = IS_CLOSED;
+	inode_table[0].size = 0;
+	int j = 0;
+	for(j = 0; j < 15; ++j){
+		inode_table[0].blocks[j] = -1;
+	}
 
 
-	
 	// fulling inode table 
-        for(i = 1; i < 256; ++i){
-                inode_table[i].num = i;
-                inode_table[0].isOpen = IS_CLOSED;
-        }
+	for(i = 1; i < 256; ++i){
+		inode_table[i].num = i;
+		inode_table[0].isOpen = IS_CLOSED;
+		for(j = 0; j < 15; ++j){
+			inode_table[i].blocks[j] = -1;
+		}
+	}
 
 	disk_open(disk);
 
-	write_inode_table(inode_table, superblock_t);
-	
+	if(write_inode_table(inode_table, superblock_t) == -1){
+		log_msg("failed to write inode_table\n");
+		return;
+	}
+
 	free(superblock_t);
 	free(inode_bitmap);
 	free(block_bitmap);
 	free(inode_table);
-	
+
 	return SFS_DATA;
 }
 
@@ -209,6 +314,7 @@ void *sfs_init(struct fuse_conn_info *conn)
 void sfs_destroy(void *userdata)
 {
 	log_msg("\nsfs_destroy(userdata=0x%08x)\n", userdata);
+	disk_close();
 }
 
 /** Get file attributes (metadata)
@@ -223,57 +329,72 @@ int sfs_getattr(const char *path, struct stat *statbuf)
 	char fpath[PATH_MAX];
 	log_msg("\nsfs_getattr(path=\"%s\", statbuf=0x%08x)\n",
 			path, statbuf);
- 	
- 	char buffer[512];
- 	
- 	
- 	block_read(14,buffer);
-    inode* root=(inode*)buffer;
-    //If the inode is the root directory
 
-    if ((strcmp(path,"/")==0)) {
-    	statbuf->st_mode = S_IFDIR | 0755;
-    	statbuf->st_size=root->size;
-    	statbuf->st_nlink = 1;
-    	statbuf->st_blocks=((root->size-1)+512)/512;
-    	return retstat;
-    }
+	// read in superblock
+	superblock* superblock_t = (superblock*)malloc(sizeof(superblock));
+	int z = block_read(0, superblock_t);
+	if (z < 0)
+		log_msg("error trying to write inode table to block\n");
+	else if (z == 0)
+		log_msg("while reading inode table block, blocks are empty\n");
 
-    else {
-    	//Get the disk path
-    	char* disk=SFS_DATA->diskfile;
-    	//buffer to read into
-    	char buffer[512];
-
-    	//Read in the root node
-    	block_read(14,buffer);
-    	inode* rootDir=(inode*)buffer;
-
-    	//Search through all the direct map ptrs
-    	int i=1;
-    	for(i;i<15;i++) {
-    		//block num referenced by ptr
-    		int blocknum=rootDir->blocks[i];
-
-    		//if valid ptr
-    		if(blocknum>0) {
-
-    			//read in inode
-    			char buffer2[512];
-    			block_read(blocknum,buffer2);
-    			inode* tempNode=(inode*)buffer2;
-
-    			//Compares paths for match
-    			if(strcmp(tempNode->filename,path+1)==0) {
-			    	statbuf->st_nlink = 2;
-			    	statbuf->st_mode = S_IFDIR | 0777;
-			    	statbuf->st_size=tempNode->size;
-			    	statbuf->st_blocks=((tempNode->size-1)+512)/512;
-			    	return retstat;
-    			}
-    		}
-    	}
+	// read in inode_table
+	inode* inode_table = load_inode_table(superblock_t);
+	if(inode_table == NULL){
+		log_msg("inode table returned -1 in getattr\n");
+		return -1;
 	}
+	inode root=inode_table[0];
+
+	//If the inode is the root directory
+	if ((strcmp(path,"/")==0)) {
+		statbuf->st_mode = S_IFDIR | 0755;
+		statbuf->st_size=root.size;
+		statbuf->st_nlink = 1;
+		statbuf->st_blocks=((root.size-1)+512)/512;
+		return retstat;
+	}
+
+	else {
+		//Get the disk path
+		char* disk=SFS_DATA->diskfile;
+		//buffer to read into
+		char buffer[512];
+
+		//Read in the root node
+		inode rootDir=inode_table[0];
+
+		//Search through all the direct map ptrs
+		int i=1;
+		for(i;i<15;i++) {
+			//block num referenced by ptr
+			int blocknum=rootDir.blocks[i];
+
+			//if valid ptr
+			if(blocknum > 0) {
+
+				//read in inode
+				inode tempNode=inode_table[blocknum];
+
+				//Compares paths for match
+				if(strcmp(tempNode.filename,path+1)==0) {
+					statbuf->st_nlink = 2;
+					statbuf->st_mode = S_IFDIR | 0777;
+					statbuf->st_size=tempNode.size;
+					statbuf->st_blocks=((tempNode.size-1)+512)/512;
+					return retstat;
+				}
+			}
+		}
+	}
+	
+	// write changes to inode_table into the fs file
+	if(write_inode_table(inode_table, superblock_t) == -1){
+		log_msg("could not write inode_table to fs file\n");
+		return -1;
+	}
+
+	free(inode_table);
 	return -ENOENT;
 }
 
@@ -289,14 +410,103 @@ int sfs_getattr(const char *path, struct stat *statbuf)
  *
  * Introduced in version 2.5
  */
-int sfs_create(const char *path, mode_t mode, struct fuse_file_info *fi)
-{
-	int retstat = 0;
-	log_msg("\nsfs_create(path=\"%s\", mode=0%03o, fi=0x%08x)\n",
-			path, mode, fi);
+int sfs_create(char *path){
+	int i,j;
+	int iposition;//bit index of inode bitmap
+	int dposition;//bit index of data block bitmap
+	int slashcount;
+	char tokenpath[PATH_MAX];//can't modify path so copy 
+	char *token=NULL;//will hold current token
+	char *parname; //store file's parent (IMPORTANT)
+	int parid;//parent id
+	char **pathwords;//tokenized "words" in path
+	int numdir;//number of directories in path input
+	inode *table;//will hold inode table read from disk
+
+	//some path checking
+	if ((slashcount = numslash(path))>=1){//checking numslash doesn't give -1
+		numdir=slashcount-1;
+	}else if (strcmp(path,"/")==0){//path shouldnt be "/"
+		log_msg("failure in create with path: %s\n",path);
+		return -1;
+	}else{//either numslash returned -1, or 0
+		log_msg("failure in create with bad path: %s\n",path);
+		return -1;
+	}
+
+	//retrieve superblock
+	char sbuf[BLOCK_SIZE];
+	superblock *s = (superblock *)malloc(sizeof(superblock));//FREE
+	block_read(0,sbuf);
+	s=(superblock *)sbuf;
+	int it_start = 0;
+	int it_end = s->max_num_of_files;
+
+	iposition=find_inode(s);
+	dposition=find_block(s);
+	if (iposition==-1 || dposition==-1){
+		free(s);
+		log_msg("failure in create with invalid space left\n");
+		return -1;
+	}
+
+	//tokenizing time!
+	strcpy(tokenpath,path);
+	token=strtok(tokenpath,"/");
+
+	if (slashcount==1){//root case: root is parent dir
+		table=(inode *)malloc(it_end*sizeof(inode));
+		table = load_inode_table(s);
+		if(table == NULL){
+			log_msg("inode_table returned NULL in create\n");
+			return -1;
+		}
+		//check if file exists
+		for (i=it_start;i<it_end;i++){//iterate thru inode table block nums
+			if (strcmp(table[i]->filename,token)==0 && table[i]->parent==0){//filenames match and rootdir is parent (inum=0?)
+				//BADDD it EXISTS!!!
+				log_msg("failure in create: FILE EXISTS\n");
+				free(s);
+				free(table);
+				return -1;
+			}
+		}
+		//create file at iposition
+		//modify superblock
+		s->num_of_inodes++;
+		s->num_of_data_blocks++;
+		//modify bitmaps with indices: dposition, iposition
+
+		//initialize new inode
+		table[i]->num=iposition;
+		table[i]->type=IS_FILE;
+		table[i]->isOpen=IS_OPEN;//open it 
+		strcpy(table[i]->filename,token);
+		table[i]->parent=0;
+		table[i]->size=0;
+		table[i]->blocks[0]=dposition;
+		table[i]->single_indir_ptr=NULL;
+		table[i]->double_indir_ptr=NULL;
+
+		//modify inode bitmap
+
+		//modify data block bitmap
+
+		//writing back to disk
+		disk_write(0,s);//write superblock back
+		//write bitmaps back
+		if(write_inode_table(table,s) == -1){
+			log_msg("could not write inode table to disk in create\n");
+			return -1;
+		}//write back to disk
+		free(table);
+		free(s);//free stuff
+		log_msg("open is a failure with path: %s\n",path);
+		return 0;
+	}
 
 
-	return retstat;
+
 }
 
 /** Remove a file */
@@ -319,14 +529,98 @@ int sfs_unlink(const char *path)
  *
  * Changed in version 2.2
  */
-int sfs_open(const char *path, struct fuse_file_info *fi)
-{
-	int retstat = 0;
-	log_msg("\nsfs_open(path\"%s\", fi=0x%08x)\n",
-			path, fi);
+int sfs_open(const char *path){
+
+	int slashcount;//return value of numslash 
+	int i=0;//loop var
+	int j=0;//loop var
+	char tokenpath[PATH_MAX];//can't modify path so copy 
+	char *token=NULL;//will hold current token
+	char *parname; //store file's parent (IMPORTANT)
+	int parid;//parent id
+	char **pathwords;//tokenized "words" in path
+	int numdir;//number of directories in path input
+	inode *table;
+
+	if ((slashcount = numslash(path))>=1){//checking numslash doesn't give -1
+		numdir=slashcount-1;
+	}else if (strcmp(path,"/")==0){//path shouldnt be "/"
+		log_msg("failure in open with path: %s\n",path);
+		return -1;
+	}else{//either numslash returned -1, or 0
+		log_msg("failure in open with bad path\n");
+		return -1;
+	}
+
+	//retrieve superblock
+	char sbuf[BLOCK_SIZE];
+	superblock *s = (superblock *)malloc(sizeof(superblock));
+	block_read(0,sbuf);
+	s=(superblock *)sbuf;
+	int it_start = 0;
+	int it_end = s->max_num_of_files;
+
+	//tokenizing time!
+	strcpy(tokenpath,path);
+	token=strtok(tokenpath,"/");
+	if (slashcount==1){//root parent case
+		table=(inode *)malloc(it_end*sizeof(inode));
+		table = load_inode_table(s);
+		if(table == NULL){
+			log_msg("inode_table returned NULL in open\n");
+		}
+		for (i=it_start;i<it_end;i++){//iterate thru inode table block nums
+			if (strcmp(table[i]->filename,token)==0 && table[i]->parent==0){//filenames match and rootdir is parent (inum=0?)
+				table[i]->isOpen=IS_OPEN;//open it 
+				//write back
+				if(write_inode_table(table,s) == -1){
+					return -1;
+				}
+				free(s);
+				log_msg("open is successful with path: %s\n",path);
+				return 0;
+			}
+		}
+		free(table);
+		free(s);
+		log_msg("open is a failure with path: %s\n",path);
+		return -1;
+	}else{//othercases that are deeper than rootdir
+		/*
+		   pathwords=(char **)malloc(slashcount*sizeof(char *));
+		   for (j=0;j<slashcount;j++){
+		   pathwords[j]=(char *)malloc(16*sizeof(char));
+		   }
+		   i=0;
+		   while (token!=NULL){
+		   printf("token is currently: %s\n",token);
+		   pathwords[i]=token;
+		//do stuff before next token
+		if (i==numdir-1){//store parent of file
+		parname=token;
+		}
+		//store stuff?
+		//end do stuff
+		token = strtok(NULL, "/");//next token
+		i++;
+		}
+		*/
+		//ALGO
+		//iterate thru ALL files
+		//fetch current inode
+		//see if filename matches token && see if parent inode = root inode (from superblock) 
+		//if so, set to open, free shit and return 0
+		//[after loop]: file does not exist, free shit, return -1
+		//if not, then create and set its parent to "/"
+		return -1;
+	}
+	// write inode table back to fs file
+	if(write_inode_table(table, superblock_t) == -1){
+		log_msg("could not write inode_table to disk\n");
+		return -1;
+	}
 
 
-	return retstat;
 }
 
 /** Release an open file
@@ -349,6 +643,46 @@ int sfs_release(const char *path, struct fuse_file_info *fi)
 	log_msg("\nsfs_release(path=\"%s\", fi=0x%08x)\n",
 			path, fi);
 
+	if(strmp(path, "/") == 0){
+		log_msg("you done goofed, you tried to file release the root dir!\n");
+		return;-1;
+	}
+	// CASE FOR ONLY FILES IN ROOT DIR
+	int i = numslash(path);
+	if (i == 1){
+		// load in superblock
+		superblock* superblock_t = (superblock*)malloc(sizeof(superblock));
+		int z = block_read(0, superblock_t);
+		if (z < 0)
+			log_msg("error trying to write inode table to block\n");
+		else if (z == 0)
+			log_msg("while reading inode table block, blocks are empty\n");
+		
+		// get filename, -1 for null terminator + -1 for root '/'
+		char* filename = (char*)malloc(sizeof(path)-2); 
+		memcpy(filename, (path+1), (sizeof(path)-2));
+		log_msg("filename to be searched for in release: %s\n", filename);
+		// load in inode table
+		inode* inode_table = load_inode_table(superblock_t);
+		if(inode_table == NULL){
+			log_msg("inode_table returned NULL in release\n");
+			return -1;
+		}
+		// look for file in inode table
+		for(i = 1; i < superblock_t->num_of_inodes; ++i){
+			// if file exists and is in the root dir
+			if((strcmp(filename, table[i]->filename) == 0) && (table->parent == NULL)){
+				// change isOpen field to IS_OPEN 
+				log_msg("found file to close in releasedir\n");
+				table[i]->isOpen = IS_CLOSED;
+				break;
+			}
+		}
+	}
+	else if (i == -1){
+		log_msg("There is a consecutive slash or no beginning slash or has an ending slash in the path when closing");
+		return -1;
+	}
 
 	return retstat;
 }
@@ -369,55 +703,55 @@ int sfs_read(const char *path, char *buf, size_t size, off_t offset, struct fuse
 	int retstat = 0;
 	log_msg("\nsfs_read(path=\"%s\", buf=0x%08x, size=%d, offset=%lld, fi=0x%08x)\n",
 			path, buf, size, offset, fi);
-/*
-	int x = 1;
-	int amountReadIN = 0; 
-	for (; x <15 ; x++)
-	{
-		char buffer[512];
-		block_read(x,buffer);
-		inode* currentBlock = (inode*) buffer;
+	/*
+	   int x = 1;
+	   int amountReadIN = 0; 
+	   for (; x <15 ; x++)
+	   {
+	   char buffer[512];
+	   block_read(x,buffer);
+	   inode* currentBlock = (inode*) buffer;
 
-		if(strcmp(current->path,path+1) == 0)
-		{
-			int numBlocksToRead = ((offset%512+size)-1+512)/512;
-			
-			int firstBlock = offset/512;
+	   if(strcmp(current->path,path+1) == 0)
+	   {
+	   int numBlocksToRead = ((offset%512+size)-1+512)/512;
 
-			int lastBlock = firstBlock+numBlocksToRead;
+	   int firstBlock = offset/512;
 
-			int i = firstBlock;
+	   int lastBlock = firstBlock+numBlocksToRead;
 
-			 for(i;i<=lastBlock;i++) {
+	   int i = firstBlock;
 
-                if(i<15) {
-                    char buffering[512];
+	   for(i;i<=lastBlock;i++) {
 
-                    //initialize
-                    if(current->blocks[i]==-1) {
-                        return amountRead;
-                    }
+	   if(i<15) {
+	   char buffering[512];
 
-                    block_read(current->dblocks[i], buffering);
+	//initialize
+	if(current->blocks[i]==-1) {
+	return amountRead;
+	}
 
-                    if(i==firstBlock) {
+	block_read(current->dblocks[i], buffering);
 
-                        memcpy(buf+amountRead,buffer3+offset%512,512-offset%512);
-                        amountRead+=512-offset%512;
-                    } else if (i==lastBlock) {
-                        memcpy(buf+amountRead,buffer3,size-amountRead);
-                        amountRead+=size-amountRead;
-                    }
-                    else {
-                        memcpy(buf+amountRead,buffer3,512);
-                        amountRead+=512-offset%512;
-                     }
-                }
+	if(i==firstBlock) {
 
-		}
+	memcpy(buf+amountRead,buffer3+offset%512,512-offset%512);
+	amountRead+=512-offset%512;
+	} else if (i==lastBlock) {
+	memcpy(buf+amountRead,buffer3,size-amountRead);
+	amountRead+=size-amountRead;
+	}
+	else {
+	memcpy(buf+amountRead,buffer3,512);
+	amountRead+=512-offset%512;
 	}
 	}
-*/
+
+	}
+	}
+	}
+	*/
 	return -1;
 }
 
@@ -477,33 +811,33 @@ int sfs_opendir(const char *path, struct fuse_file_info *fi)
 	int retstat = 0;
 	log_msg("\nsfs_opendir(path=\"%s\", fi=0x%08x)\n",
 			path, fi);
-		int i=0;
-		int found=0;
-		char buffer[512];
-		//load root node into root
- 		block_read(14,buffer);
- 			inode* root=(inode*)buffer;
-    	if(strcmp(root->filename, path) == 0){
-			//root->isOpen = 1;
-			return 0;
-		}
-		//search through all of the direct mapped pointers in root
-		for(;i < 15; i++ ){
-			if(root->blocks[i] > 0){
-				if(strcmp(path+1,root->filename)==0 && root->isOpen==0) {
-					found = 1;
-					root->isOpen = 1;
-					block_write(14, root);
-				}
+	int i=0;
+	int found=0;
+	char buffer[512];
+	//load root node into root
+	block_read(14,buffer);
+	inode* root=(inode*)buffer;
+	if(strcmp(root->filename, path) == 0){
+		//root->isOpen = 1;
+		return 0;
+	}
+	//search through all of the direct mapped pointers in root
+	for(;i < 15; i++ ){
+		if(root->blocks[i] > 0){
+			if(strcmp(path+1,root->filename)==0 && root->isOpen==0) {
+				found = 1;
+				root->isOpen = 1;
+				block_write(14, root);
 			}
 		}
-		if (found==0)
-		{
-			return  -1;	
-		}
-		else {
-			return retstat;	
-		}
+	}
+	if (found==0)
+	{
+		return  -1;	
+	}
+	else {
+		return retstat;	
+	}
 }
 
 /** Read directory
@@ -530,6 +864,11 @@ int sfs_opendir(const char *path, struct fuse_file_info *fi)
 int sfs_readdir(const char *path, void *buf, fuse_fill_dir_t filler, off_t offset,
 		struct fuse_file_info *fi)
 {
+
+	// read in superblock
+	superblock* superblock_t = (superblock*)malloc(sizeof(superblock));
+	
+
 	int retstat = 0;
 	log_msg("\nreaddir has begun\n");
 	if(strcmp(path,"/") != 0 )
@@ -545,31 +884,31 @@ int sfs_readdir(const char *path, void *buf, fuse_fill_dir_t filler, off_t offse
 
 	block_read(14,buffer);
 	inode* rootDir = (inode*)buffer;
-    //Search through all the direct map ptrs
-    	int i=0;
-    	for(i;i<15;i++) {
-			log_msg("\nreaddir: inside first for loop %d\n",i);
-    		//block num referenced by ptr
-    		int blocknum = 0;
-    		 blocknum = rootDir->blocks[i];
-			log_msg("%d\n",blocknum);
-    		//if valid ptr
-    		if(blocknum > 14) {
+	//Search through all the direct map ptrs
+	int i=0;
+	for(i;i<15;i++) {
+		log_msg("\nreaddir: inside first for loop %d\n",i);
+		//block num referenced by ptr
+		int blocknum = 0;
+		blocknum = rootDir->blocks[i];
+		log_msg("%d\n",blocknum);
+		//if valid ptr
+		if(blocknum > 14) {
 			log_msg("entered 2nd for loop");
- 	   			//read in inode
-    			char buffer2[512];
-    			block_read(blocknum,buffer2);
-    			inode* tempNode=(inode*)buffer2;
+			//read in inode
+			char buffer2[512];
+			block_read(blocknum,buffer2);
+			inode* tempNode=(inode*)buffer2;
 			log_msg("\npath=\"%s\"\n",tempNode->filename);
-    			//Compares paths for match
+			//Compares paths for match
 
-    				if (filler(buf, tempNode->filename, NULL, 0) != 0){
-					log_msg("\nerror returned: ENOMEM. When inserting file with path:\"%s\"\n",tempNode->filename);
-        				return -ENOMEM;
-    				}
-    		}
-    	}
-    	
+			if (filler(buf, tempNode->filename, NULL, 0) != 0){
+				log_msg("\nerror returned: ENOMEM. When inserting file with path:\"%s\"\n",tempNode->filename);
+				return -ENOMEM;
+			}
+		}
+	}
+
 	return 0;
 }
 
@@ -579,9 +918,9 @@ int sfs_readdir(const char *path, void *buf, fuse_fill_dir_t filler, off_t offse
  */
 int sfs_releasedir(const char *path, struct fuse_file_info *fi)
 {
-  int retstat = 0;
+	int retstat = 0;
 	log_msg("\nsfs_releasedir(path=\"%s\", fi=0x%08x)\n",
-          path, fi);
+			path, fi);
 	char buffer[512];
 	inode * root = (inode *) buffer;
 	block_read(14,root);
