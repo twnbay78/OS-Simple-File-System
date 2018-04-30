@@ -54,7 +54,8 @@ int write_inode_table(inode* inode_table, superblock* superblock_t) {
 	for(i = superblock_t->start_of_inode_table; i < superblock_t->start_of_data_block; ++i){
 		for(q = 0; q < 32; ++q){
 			int j = block_write(i, buffer);
-			inode_table[q] = (inode)buffer;
+			inode* temp = (inode*)buffer;
+			inode_table[q] = *temp;
 			if (j < 1){
 				log_msg("error trying to write inode table to block\n");
 				return -1; 
@@ -406,7 +407,7 @@ char buffers[512];
  *
  * Introduced in version 2.5
  */
-int sfs_create(char *path){
+int sfs_create(const char *path, mode_t mode, struct fuse_file_info *fi){
 	int i,j;
 	int iposition;//bit index of inode bitmap
 	int dposition;//bit index of data block bitmap
@@ -514,7 +515,7 @@ int sfs_unlink(const char *path){
 	char **pathwords;//tokenized "words" in path
 	int numdir;//number of directories in path input
 	inode *table;
-
+	
 	//path checking
 	if ((slashcount = numslash(path))>=1){//checking numslash doesn't give -1
 		numdir=slashcount-1;
@@ -525,7 +526,7 @@ int sfs_unlink(const char *path){
 		log_msg("failure in unlink with bad path\n");
 		return -1;
 	}
-
+	
 	//load in superblock
 	char sbuf[BLOCK_SIZE];
 	superblock *s = (superblock *)malloc(sizeof(superblock));
@@ -536,7 +537,7 @@ int sfs_unlink(const char *path){
 		return -1;
 	}
 	//load in inode table
-	inode *table=(inode *)malloc(it_end*sizeof(inode));
+	table=(inode *)malloc(s->max_num_of_files*sizeof(inode));
 	table = load_inode_table(s);
 	//load in block bitmap
 	int* block_bitmap = (int*)malloc(sizeof(int) * 1024);
@@ -544,27 +545,27 @@ int sfs_unlink(const char *path){
 	//load in inode bitmap
 	int* inode_bitmap = (int*)malloc(sizeof(int) * 1024);
 	block_read(s->start_of_inode_bitmap, inode_bitmap);
-
+	
 	//check table and bitmap mallocs
 	if(table == NULL){
-		log_msg("inode_table returned NULL in open\n");
-		return -1;
+			log_msg("inode_table returned NULL in open\n");
+			return -1;
 	}else if(inode_bitmap == NULL){
-		log_msg("inode_bitmap returned NULL in open\n");
-		return -1;
+			log_msg("inode_bitmap returned NULL in open\n");
+			return -1;
 	}else if(block_bitmap == NULL){
-		log_msg("block_bitmap returned NULL in open\n");
-		return -1;
+			log_msg("block_bitmap returned NULL in open\n");
+			return -1;
 	}
-
+	
 	//tokenizing time!
 	strcpy(tokenpath,path);
 	token=strtok(tokenpath,"/");
-
+	
 	int blocksfreed=0; 
-
+	
 	if (slashcount==1){//root parent case
-		for (i=0;i<max_num_of_files;i++){//iterate thru inode table block nums
+		for (i=0;i<s->max_num_of_files;i++){//iterate thru inode table block nums
 			if (strcmp(table[i].filename,token)==0 && table[i].parent==0){//filenames match and rootdir is parent (inum=0?)
 				//update inode
 				table[i].isOpen=IS_CLOSED;//close it 
@@ -582,13 +583,13 @@ int sfs_unlink(const char *path){
 						blocksfreed++;
 					}	
 				}
-
+				
 				//reset inode bit
 				ClearBit(inode_bitmap,i);
 				//update superblock
 				s->num_of_inodes--;
 				s->num_of_data_blocks-=blocksfreed;
-
+				
 				//write back bitmaps, superblock, inode table
 				if(block_write(0,s) == -1){//superblock
 					log_msg("couldn't write superblock back");
@@ -607,7 +608,6 @@ int sfs_unlink(const char *path){
 				free(table);
 				free(block_bitmap);
 				free(inode_bitmap);
-				free(s);
 				log_msg("unlink is successful with path: %s\n",path);
 				return 0;
 			}
@@ -615,14 +615,12 @@ int sfs_unlink(const char *path){
 		free(table);
 		free(block_bitmap);
 		free(inode_bitmap);
-		free(s);
 		log_msg("unlink is a failure with path: %s\n",path);
 		return -1;
 	}
 	free(table);
 	free(block_bitmap);
 	free(inode_bitmap);
-	free(s);
 	log_msg("unlink is a failure with path: %s\n",path);
 	return -1;
 }
@@ -637,7 +635,7 @@ int sfs_unlink(const char *path){
  *
  * Changed in version 2.2
  */
-int sfs_open(const char *path){
+int sfs_open(const char *path, struct fuse_file_info *fi){
 
 	int slashcount;//return value of numslash 
 	int i=0;//loop var
@@ -1095,6 +1093,29 @@ int sfs_releasedir(const char *path, struct fuse_file_info *fi)
 	if(strcmp(path, root->filename) == 0){
 		block_write(14,root);		
 	}
+
+	return retstat;
+}
+
+/** Remove a directory */
+int sfs_rmdir(const char *path)
+{
+	int retstat = 0;
+	log_msg("sfs_rmdir(path=\"%s\")\n",
+			path);
+
+
+	return retstat;
+}
+
+
+/** Create a directory */
+int sfs_mkdir(const char *path, mode_t mode)
+{
+	int retstat = 0;
+	log_msg("\nsfs_mkdir(path=\"%s\", mode=0%3o)\n",
+			path, mode);
+
 
 	return retstat;
 }
