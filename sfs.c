@@ -46,12 +46,15 @@
  */
 int write_inode_table(inode* inode_table, superblock* superblock_t) {
 
+	char buffer[4096];
+
 	// writing inode table to fs file
 	int i = 0;
 	int q = 0;
 	for(i = superblock_t->start_of_inode_table; i < superblock_t->start_of_data_block; ++i){
 		for(q = 0; q < 32; ++q){
-			int j = block_write(i, inode_table[q]);
+			int j = block_write(i, buffer);
+			inode_table[q] = (inode)buffer;
 			if (j < 1){
 				log_msg("error trying to write inode table to block\n");
 				return -1; 
@@ -274,6 +277,7 @@ void *sfs_init(struct fuse_conn_info *conn)
 	inode_table[0].type = IS_DIR;
 	inode_table[0].isOpen = IS_CLOSED;
 	inode_table[0].size = 0;
+	inode_table[0].parent = -2;
 	int j = 0;
 	for(j = 0; j < 15; ++j){
 		inode_table[0].blocks[j] = -1;
@@ -286,6 +290,7 @@ void *sfs_init(struct fuse_conn_info *conn)
 		inode_table[0].isOpen = IS_CLOSED;
 		for(j = 0; j < 15; ++j){
 			inode_table[i].blocks[j] = -1;
+			inode_table[i].parent = -1;
 		}
 	}
 
@@ -623,7 +628,7 @@ int sfs_open(const char *path){
 		return -1;
 	}
 	// write inode table back to fs file
-	if(write_inode_table(table, superblock_t) == -1){
+	if(write_inode_table(table, s) == -1){
 		log_msg("could not write inode_table to disk\n");
 		return -1;
 	}
@@ -678,10 +683,10 @@ int sfs_release(const char *path, struct fuse_file_info *fi)
 		// look for file in inode table
 		for(i = 1; i < superblock_t->num_of_inodes; ++i){
 			// if file exists and is in the root dir
-			if((strcmp(filename, table[i]->filename) == 0) && (table->parent == NULL)){
+			if((strcmp(filename, inode_table[i].filename) == 0) && (inode_table->parent == -1)){
 				// change isOpen field to IS_OPEN 
 				log_msg("found file to close in releasedir\n");
-				table[i]->isOpen = IS_CLOSED;
+				inode_table[i].isOpen = IS_CLOSED;
 				break;
 			}
 		}
