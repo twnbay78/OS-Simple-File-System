@@ -115,8 +115,32 @@ int find_block(
  *
  *
  */
-
-
+	
+//ALL YOUR SLASHING NEEDS:
+//returns number of slashes found in given path
+//returns -1 if consecutive slashes or no beginning slash or has an ending slash
+int numslash(const char *path){
+	int pathlen = strlen(path);
+	int slashcount=0;
+	int lastslashind=-1;//make sure no consecutive slashes
+	int i;//loop
+	if (path[pathlen-1]=='/'||path[0]!='/')//path must begin with a slash and NOT end with a slash
+		return -1;
+	for (i=0;i<pathlen;i++){
+		if (path[i]=='/'){
+			if (lastslashind==-1){
+				lastslashind=i;
+			}else{
+				if (i-1==lastslashind){
+					return -1;
+				}
+			}
+		slashcount++;
+		lastslashind=i;
+		}	
+	}
+	return slashcount;
+}
 
 
 ///////////////////////////////////////////////////////////
@@ -291,12 +315,91 @@ int sfs_getattr(const char *path, struct stat *statbuf)
  */
 int sfs_create(const char *path, mode_t mode, struct fuse_file_info *fi)
 {
-	int retstat = 0;
-	log_msg("\nsfs_create(path=\"%s\", mode=0%03o, fi=0x%08x)\n",
-			path, mode, fi);
-
-
-	return retstat;
+	int i,j;
+	int iposition;//bit index of inode bitmap
+	int dposition;//bit index of data block bitmap
+	int slashcount;
+	char tokenpath[PATH_MAX];//can't modify path so copy 
+	char *token=NULL;//will hold current token
+	char *parname; //store file's parent (IMPORTANT)
+	int parid;//parent id
+	char **pathwords;//tokenized "words" in path
+	int numdir;//number of directories in path input
+	inode *table;//will hold inode table read from disk
+	
+	//some path checking
+	if ((slashcount = numslash(path))>=1){//checking numslash doesn't give -1
+		numdir=slashcount-1;
+	}else if (strcmp(path,"/")==0){//path shouldnt be "/"
+		log_msg("failure in create with path: %s\n",path);
+		return -1;
+	}else{//either numslash returned -1, or 0
+		log_msg("failure in create with bad path: %s\n",path);
+		return -1;
+	}
+	
+	//retrieve superblock
+	char sbuf[BLOCK_SIZE];
+	superblock *s = (superblock *)malloc(sizeof(superblock));//FREE
+	block_read(0,sbuf);
+	s=(superblock *)sbuf;
+	int it_start = 0;
+	int it_end = s->max_num_of_files;
+	
+	iposition=find_inode(s);
+	dposition=find_block(s);
+	if (iposition==-1 || dposition==-1){
+		free(s);
+		log_msg("failure in create with invalid space left");
+		return -1;
+	}
+	
+	//tokenizing time!
+	strcpy(tokenpath,path);
+	token=strtok(tokenpath,"/");
+	
+	if (slashcount==1){//root case: root is parent dir
+		table=(inode *)malloc(it_end*sizeof(inode));
+		table = load_inode_table(s);
+		//check if file exists
+		for (i=it_start;i<it_end;i++){//iterate thru inode table block nums
+			if (strcmp(table[i]->filename,token)==0 && table[i]->parent==0){//filenames match and rootdir is parent (inum=0?)
+				//BADDD it EXISTS!!!
+				log_msg("failure in create: FILE EXISTS");
+				free(s);
+				free(table);
+				return -1;
+			}
+		}
+		//create file at iposition
+		//modify superblock
+		s->num_of_inodes++;
+		s->num_of_data_blocks++;
+		//modify bitmaps with indices: dposition, iposition
+		
+		//initialize new inode
+		table[i]->num=iposition;
+		table[i]->type=IS_FILE;
+		table[i]->isOpen=IS_OPEN;//open it 
+		strcpy(table[i]->filename,token);
+		table[i]->parent=0;
+		table[i]->size=0;
+		table[i]->blocks[0]=dposition;
+		table[i]->single_indir_ptr=NULL;
+		table[i]->double_indir_ptr=NULL;
+		
+		//modify inode bitmap
+		
+		//modify data block bitmap
+		
+		//writing back to disk
+		disk_write(0,s);//write superblock back
+		//write bitmaps back
+		write_inode_table(table,s);//write back to disk
+		free(s);//free stuff
+		log_msg("open is a failure with path: %s\n",path);
+		return 0;
+	}
 }
 
 /** Remove a file */
@@ -321,12 +424,76 @@ int sfs_unlink(const char *path)
  */
 int sfs_open(const char *path, struct fuse_file_info *fi)
 {
-	int retstat = 0;
-	log_msg("\nsfs_open(path\"%s\", fi=0x%08x)\n",
-			path, fi);
-
-
-	return retstat;
+	int slashcount;//return value of numslash 
+	int i=0;//loop var
+	int j=0;//loop var
+	char tokenpath[PATH_MAX];//can't modify path so copy 
+	char *token=NULL;//will hold current token
+	char *parname; //store file's parent (IMPORTANT)
+	int parid;//parent id
+	char **pathwords;//tokenized "words" in path
+	int numdir;//number of directories in path input
+	inode *table;
+	
+	if ((slashcount = numslash(path))>=1){//checking numslash doesn't give -1
+		numdir=slashcount-1;
+	}else if (strcmp(path,"/")==0){//path shouldnt be "/"
+		log_msg("failure in open with path: %s\n",path);
+		return -1;
+	}else{//either numslash returned -1, or 0
+		log_msg("failure in open with bad path\n");
+		return -1;
+	}
+	
+	//retrieve superblock
+	char sbuf[BLOCK_SIZE];
+	superblock *s = (superblock *)malloc(sizeof(superblock));
+	block_read(0,sbuf);
+	s=(superblock *)sbuf;
+	int it_start = 0;
+	int it_end = s->max_num_of_files;
+	
+	//tokenizing time!
+	strcpy(tokenpath,path);
+	token=strtok(tokenpath,"/");
+	if (slashcount==1){//root parent case
+		table=(inode *)malloc(it_end*sizeof(inode));
+		table = load_inode_table(s);
+		for (i=it_start;i<it_end;i++){//iterate thru inode table block nums
+			if (strcmp(table[i]->filename,token)==0 && table[i]->parent==0){//filenames match and rootdir is parent (inum=0?)
+				table[i]->isOpen=IS_OPEN;//open it 
+				//write back
+				write_inode_table(table,s);
+				free(s);
+				log_msg("open is successful with path: %s\n",path);
+				return 0;
+			}
+		}
+		free(table);
+		free(s);
+		log_msg("open is a failure with path: %s\n",path);
+		return -1;
+	}else{//othercases that are deeper than rootdir
+		/*
+		pathwords=(char **)malloc(slashcount*sizeof(char *));
+		for (j=0;j<slashcount;j++){
+			pathwords[j]=(char *)malloc(16*sizeof(char));
+		}
+		i=0;
+		while (token!=NULL){
+			printf("token is currently: %s\n",token);
+			pathwords[i]=token;
+			//do stuff before next token
+			if (i==numdir-1){//store parent of file
+				parname=token;
+			}
+			//store stuff?
+			//end do stuff
+			token = strtok(NULL, "/");//next token
+			i++;
+		}*/
+		return -1;
+	}
 }
 
 /** Release an open file
