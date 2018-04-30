@@ -36,6 +36,10 @@
  *
  */
 
+/*
+ * Takes in an inode table and writes the table to the disk. The only error checking the inode table does is with disk_write,
+ * and will log messages if the disk could not be written to
+ */
 void write_inode_table(inode* inode_table, superblock* superblock_t) {
 	
 	// writing inode table to fs file
@@ -50,8 +54,14 @@ void write_inode_table(inode* inode_table, superblock* superblock_t) {
 		}	
 	}
 	free(inode_table);
+	log_msg("inode table is loaded");
 }
 
+/*
+ * This function will return the inode table currently written to disk
+ * The only error checking done is with disk_read. Log messages will be written if
+ * the blocks read are empty or if the blocks cannot be read.
+ */
 inode* load_inode_table(superblock* superblock_t) {
 	
 	inode* inode_table = (inode*)malloc(sizeof(inode) * superblock_t->num_of_inodes);
@@ -73,10 +83,32 @@ inode* load_inode_table(superblock* superblock_t) {
 		free(temp);
 	}
 	
+	log_msg("inode table is loaded");
 	return inode_table;
 }
 
+/*
+ * This function searches the inode_bitmap and returns an index number of the first found free inode
+ * If a free inode cannot be found, whether there are no more free inodes or undefined behavior occurs, the function will return -1. 
+ */
+int find_inode(superblock* superblock_t){
+	
+	inode* inode_table = load_inode_table(superblock_t);
+	
+	// load in bitmap
+	int* inode_bitmap;
+	block_read(superblock_t->inode_bitmap, inode_bitmap);
 
+	return -1;
+}	
+
+/*
+ * This function searches the block bitmap for a free block. The block number is returned.
+ * If a free block cannot be found, whether there are no more free blocks or undefined behavior occurs, the function will return -1.
+ */
+int find_block(
+
+}
 
 /* HELPER FUNCTIONS - Bitmap Functions
  *
@@ -127,12 +159,12 @@ void *sfs_init(struct fuse_conn_info *conn)
 
 
         // declare bitmaps and set all to 0 indicating open
-        int inode_bitmap[1024];
+        int* inode_bitmap = (int*)malloc(sizeof(int) * 1024);
         int i;
         for(i = 0; i < 1024; ++i){
                 inode_bitmap[i] = 0;
         }
-        int block_bitmap[1024];
+        int* block_bitmap = (int*)malloc(sizeof(int) * 1024);
         for(i = 0; i < 1024; ++i){
                 block_bitmap[i] = 0;
         }
@@ -158,6 +190,11 @@ void *sfs_init(struct fuse_conn_info *conn)
 	disk_open(disk);
 
 	write_inode_table(inode_table, superblock_t);
+	
+	free(superblock_t);
+	free(inode_bitmap);
+	free(block_bitmap);
+	free(inode_table);
 	
 	return SFS_DATA;
 }
