@@ -18,13 +18,12 @@ typedef struct _inode {
  	uint16_t num;
 	uint16_t type;
 	int16_t isOpen;
-	char filename[16];
+	char filename[32];
 	uint32_t parent;
 	uint32_t size;
 	uint32_t blocks[15];
   	uint32_t** single_indir_ptr;
   	uint32_t*** double_indir_ptr;
-	char padding[16];
 }inode;
 
 typedef struct _dirData {

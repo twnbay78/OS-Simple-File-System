@@ -9,15 +9,5297 @@ sfs_init()
     capable = 00000ffb
     want = 00000010
     context:
-    fuse = 016fd4b0
+    fuse = 0172f4b0
     uid = 0
     gid = 0
     pid = 0
-    private_data = 016fd010
-    logfile = 016fd030
+    private_data = 0172f010
+    logfile = 0172f030
     diskfile = /.freespace/ls949/testfsfile
     umask = 00000
 
-sfs_getattr(path="/", statbuf=0xe2b9dc10)
+sfs_getattr(path="/", statbuf=0x338dcc10)
+get attr returning
 
-sfs_destroy(userdata=0x016fd010)
+sfs_opendir(path="/", fi=0x338dcc30)
+
+readdir has begun
+
+readdir: inside first for loop 0
+/
+parent: -2
+
+readdir: inside first for loop 1
+
+parent: -1
+
+readdir: inside first for loop 2
+
+parent: -1
+
+readdir: inside first for loop 3
+
+parent: -1
+
+readdir: inside first for loop 4
+
+parent: -1
+
+readdir: inside first for loop 5
+
+parent: -1
+
+readdir: inside first for loop 6
+
+parent: -1
+
+readdir: inside first for loop 7
+
+parent: -1
+
+readdir: inside first for loop 8
+
+parent: -1
+
+readdir: inside first for loop 9
+
+parent: -1
+
+readdir: inside first for loop 10
+
+parent: -1
+
+readdir: inside first for loop 11
+
+parent: -1
+
+readdir: inside first for loop 12
+
+parent: -1
+
+readdir: inside first for loop 13
+
+parent: -1
+
+readdir: inside first for loop 14
+
+parent: -1
+
+readdir: inside first for loop 15
+
+parent: -1
+
+readdir: inside first for loop 16
+
+parent: -1
+
+readdir: inside first for loop 17
+
+parent: -1
+
+readdir: inside first for loop 18
+
+parent: -1
+
+readdir: inside first for loop 19
+
+parent: -1
+
+readdir: inside first for loop 20
+
+parent: -1
+
+readdir: inside first for loop 21
+
+parent: -1
+
+readdir: inside first for loop 22
+
+parent: -1
+
+readdir: inside first for loop 23
+
+parent: -1
+
+readdir: inside first for loop 24
+
+parent: -1
+
+readdir: inside first for loop 25
+
+parent: -1
+
+readdir: inside first for loop 26
+
+parent: -1
+
+readdir: inside first for loop 27
+
+parent: -1
+
+readdir: inside first for loop 28
+
+parent: -1
+
+readdir: inside first for loop 29
+
+parent: -1
+
+readdir: inside first for loop 30
+
+parent: -1
+
+readdir: inside first for loop 31
+
+parent: -1
+
+readdir: inside first for loop 32
+
+parent: -1
+
+readdir: inside first for loop 33
+
+parent: -1
+
+readdir: inside first for loop 34
+
+parent: -1
+
+readdir: inside first for loop 35
+
+parent: -1
+
+readdir: inside first for loop 36
+
+parent: -1
+
+readdir: inside first for loop 37
+
+parent: -1
+
+readdir: inside first for loop 38
+
+parent: -1
+
+readdir: inside first for loop 39
+
+parent: -1
+
+readdir: inside first for loop 40
+
+parent: -1
+
+readdir: inside first for loop 41
+
+parent: -1
+
+readdir: inside first for loop 42
+
+parent: -1
+
+readdir: inside first for loop 43
+
+parent: -1
+
+readdir: inside first for loop 44
+
+parent: -1
+
+readdir: inside first for loop 45
+
+parent: -1
+
+readdir: inside first for loop 46
+
+parent: -1
+
+readdir: inside first for loop 47
+
+parent: -1
+
+readdir: inside first for loop 48
+
+parent: -1
+
+readdir: inside first for loop 49
+
+parent: -1
+
+readdir: inside first for loop 50
+
+parent: -1
+
+readdir: inside first for loop 51
+
+parent: -1
+
+readdir: inside first for loop 52
+
+parent: -1
+
+readdir: inside first for loop 53
+
+parent: -1
+
+readdir: inside first for loop 54
+
+parent: -1
+
+readdir: inside first for loop 55
+
+parent: -1
+
+readdir: inside first for loop 56
+
+parent: -1
+
+readdir: inside first for loop 57
+
+parent: -1
+
+readdir: inside first for loop 58
+
+parent: -1
+
+readdir: inside first for loop 59
+
+parent: -1
+
+readdir: inside first for loop 60
+
+parent: -1
+
+readdir: inside first for loop 61
+
+parent: -1
+
+readdir: inside first for loop 62
+
+parent: -1
+
+readdir: inside first for loop 63
+
+parent: -1
+
+readdir: inside first for loop 64
+
+parent: -1
+
+readdir: inside first for loop 65
+
+parent: -1
+
+readdir: inside first for loop 66
+
+parent: -1
+
+readdir: inside first for loop 67
+
+parent: -1
+
+readdir: inside first for loop 68
+
+parent: -1
+
+readdir: inside first for loop 69
+
+parent: -1
+
+readdir: inside first for loop 70
+
+parent: -1
+
+readdir: inside first for loop 71
+
+parent: -1
+
+readdir: inside first for loop 72
+
+parent: -1
+
+readdir: inside first for loop 73
+
+parent: -1
+
+readdir: inside first for loop 74
+
+parent: -1
+
+readdir: inside first for loop 75
+
+parent: -1
+
+readdir: inside first for loop 76
+
+parent: -1
+
+readdir: inside first for loop 77
+
+parent: -1
+
+readdir: inside first for loop 78
+
+parent: -1
+
+readdir: inside first for loop 79
+
+parent: -1
+
+readdir: inside first for loop 80
+
+parent: -1
+
+readdir: inside first for loop 81
+
+parent: -1
+
+readdir: inside first for loop 82
+
+parent: -1
+
+readdir: inside first for loop 83
+
+parent: -1
+
+readdir: inside first for loop 84
+
+parent: -1
+
+readdir: inside first for loop 85
+
+parent: -1
+
+readdir: inside first for loop 86
+
+parent: -1
+
+readdir: inside first for loop 87
+
+parent: -1
+
+readdir: inside first for loop 88
+
+parent: -1
+
+readdir: inside first for loop 89
+
+parent: -1
+
+readdir: inside first for loop 90
+
+parent: -1
+
+readdir: inside first for loop 91
+
+parent: -1
+
+readdir: inside first for loop 92
+
+parent: -1
+
+readdir: inside first for loop 93
+
+parent: -1
+
+readdir: inside first for loop 94
+
+parent: -1
+
+readdir: inside first for loop 95
+
+parent: -1
+
+readdir: inside first for loop 96
+
+parent: -1
+
+readdir: inside first for loop 97
+
+parent: -1
+
+readdir: inside first for loop 98
+
+parent: -1
+
+readdir: inside first for loop 99
+
+parent: -1
+
+readdir: inside first for loop 100
+
+parent: -1
+
+readdir: inside first for loop 101
+
+parent: -1
+
+readdir: inside first for loop 102
+
+parent: -1
+
+readdir: inside first for loop 103
+
+parent: -1
+
+readdir: inside first for loop 104
+
+parent: -1
+
+readdir: inside first for loop 105
+
+parent: -1
+
+readdir: inside first for loop 106
+
+parent: -1
+
+readdir: inside first for loop 107
+
+parent: -1
+
+readdir: inside first for loop 108
+
+parent: -1
+
+readdir: inside first for loop 109
+
+parent: -1
+
+readdir: inside first for loop 110
+
+parent: -1
+
+readdir: inside first for loop 111
+
+parent: -1
+
+readdir: inside first for loop 112
+
+parent: -1
+
+readdir: inside first for loop 113
+
+parent: -1
+
+readdir: inside first for loop 114
+
+parent: -1
+
+readdir: inside first for loop 115
+
+parent: -1
+
+readdir: inside first for loop 116
+
+parent: -1
+
+readdir: inside first for loop 117
+
+parent: -1
+
+readdir: inside first for loop 118
+
+parent: -1
+
+readdir: inside first for loop 119
+
+parent: -1
+
+readdir: inside first for loop 120
+
+parent: -1
+
+readdir: inside first for loop 121
+
+parent: -1
+
+readdir: inside first for loop 122
+
+parent: -1
+
+readdir: inside first for loop 123
+
+parent: -1
+
+readdir: inside first for loop 124
+
+parent: -1
+
+readdir: inside first for loop 125
+
+parent: -1
+
+readdir: inside first for loop 126
+
+parent: -1
+
+readdir: inside first for loop 127
+
+parent: -1
+
+readdir: inside first for loop 128
+
+parent: -1
+
+readdir: inside first for loop 129
+
+parent: -1
+
+readdir: inside first for loop 130
+
+parent: -1
+
+readdir: inside first for loop 131
+
+parent: -1
+
+readdir: inside first for loop 132
+
+parent: -1
+
+readdir: inside first for loop 133
+
+parent: -1
+
+readdir: inside first for loop 134
+
+parent: -1
+
+readdir: inside first for loop 135
+
+parent: -1
+
+readdir: inside first for loop 136
+
+parent: -1
+
+readdir: inside first for loop 137
+
+parent: -1
+
+readdir: inside first for loop 138
+
+parent: -1
+
+readdir: inside first for loop 139
+
+parent: -1
+
+readdir: inside first for loop 140
+
+parent: -1
+
+readdir: inside first for loop 141
+
+parent: -1
+
+readdir: inside first for loop 142
+
+parent: -1
+
+readdir: inside first for loop 143
+
+parent: -1
+
+readdir: inside first for loop 144
+
+parent: -1
+
+readdir: inside first for loop 145
+
+parent: -1
+
+readdir: inside first for loop 146
+
+parent: -1
+
+readdir: inside first for loop 147
+
+parent: -1
+
+readdir: inside first for loop 148
+
+parent: -1
+
+readdir: inside first for loop 149
+
+parent: -1
+
+readdir: inside first for loop 150
+
+parent: -1
+
+readdir: inside first for loop 151
+
+parent: -1
+
+readdir: inside first for loop 152
+
+parent: -1
+
+readdir: inside first for loop 153
+
+parent: -1
+
+readdir: inside first for loop 154
+
+parent: -1
+
+readdir: inside first for loop 155
+
+parent: -1
+
+readdir: inside first for loop 156
+
+parent: -1
+
+readdir: inside first for loop 157
+
+parent: -1
+
+readdir: inside first for loop 158
+
+parent: -1
+
+readdir: inside first for loop 159
+
+parent: -1
+
+readdir: inside first for loop 160
+
+parent: -1
+
+readdir: inside first for loop 161
+
+parent: -1
+
+readdir: inside first for loop 162
+
+parent: -1
+
+readdir: inside first for loop 163
+
+parent: -1
+
+readdir: inside first for loop 164
+
+parent: -1
+
+readdir: inside first for loop 165
+
+parent: -1
+
+readdir: inside first for loop 166
+
+parent: -1
+
+readdir: inside first for loop 167
+
+parent: -1
+
+readdir: inside first for loop 168
+
+parent: -1
+
+readdir: inside first for loop 169
+
+parent: -1
+
+readdir: inside first for loop 170
+
+parent: -1
+
+readdir: inside first for loop 171
+
+parent: -1
+
+readdir: inside first for loop 172
+
+parent: -1
+
+readdir: inside first for loop 173
+
+parent: -1
+
+readdir: inside first for loop 174
+
+parent: -1
+
+readdir: inside first for loop 175
+
+parent: -1
+
+readdir: inside first for loop 176
+
+parent: -1
+
+readdir: inside first for loop 177
+
+parent: -1
+
+readdir: inside first for loop 178
+
+parent: -1
+
+readdir: inside first for loop 179
+
+parent: -1
+
+readdir: inside first for loop 180
+
+parent: -1
+
+readdir: inside first for loop 181
+
+parent: -1
+
+readdir: inside first for loop 182
+
+parent: -1
+
+readdir: inside first for loop 183
+
+parent: -1
+
+readdir: inside first for loop 184
+
+parent: -1
+
+readdir: inside first for loop 185
+
+parent: -1
+
+readdir: inside first for loop 186
+
+parent: -1
+
+readdir: inside first for loop 187
+
+parent: -1
+
+readdir: inside first for loop 188
+
+parent: -1
+
+readdir: inside first for loop 189
+
+parent: -1
+
+readdir: inside first for loop 190
+
+parent: -1
+
+readdir: inside first for loop 191
+
+parent: -1
+
+readdir: inside first for loop 192
+
+parent: -1
+
+readdir: inside first for loop 193
+
+parent: -1
+
+readdir: inside first for loop 194
+
+parent: -1
+
+readdir: inside first for loop 195
+
+parent: -1
+
+readdir: inside first for loop 196
+
+parent: -1
+
+readdir: inside first for loop 197
+
+parent: -1
+
+readdir: inside first for loop 198
+
+parent: -1
+
+readdir: inside first for loop 199
+
+parent: -1
+
+readdir: inside first for loop 200
+
+parent: -1
+
+readdir: inside first for loop 201
+
+parent: -1
+
+readdir: inside first for loop 202
+
+parent: -1
+
+readdir: inside first for loop 203
+
+parent: -1
+
+readdir: inside first for loop 204
+
+parent: -1
+
+readdir: inside first for loop 205
+
+parent: -1
+
+readdir: inside first for loop 206
+
+parent: -1
+
+readdir: inside first for loop 207
+
+parent: -1
+
+readdir: inside first for loop 208
+
+parent: -1
+
+readdir: inside first for loop 209
+
+parent: -1
+
+readdir: inside first for loop 210
+
+parent: -1
+
+readdir: inside first for loop 211
+
+parent: -1
+
+readdir: inside first for loop 212
+
+parent: -1
+
+readdir: inside first for loop 213
+
+parent: -1
+
+readdir: inside first for loop 214
+
+parent: -1
+
+readdir: inside first for loop 215
+
+parent: -1
+
+readdir: inside first for loop 216
+
+parent: -1
+
+readdir: inside first for loop 217
+
+parent: -1
+
+readdir: inside first for loop 218
+
+parent: -1
+
+readdir: inside first for loop 219
+
+parent: -1
+
+readdir: inside first for loop 220
+
+parent: -1
+
+readdir: inside first for loop 221
+
+parent: -1
+
+readdir: inside first for loop 222
+
+parent: -1
+
+readdir: inside first for loop 223
+
+parent: -1
+
+readdir: inside first for loop 224
+
+parent: -1
+
+readdir: inside first for loop 225
+
+parent: -1
+
+readdir: inside first for loop 226
+
+parent: -1
+
+readdir: inside first for loop 227
+
+parent: -1
+
+readdir: inside first for loop 228
+
+parent: -1
+
+readdir: inside first for loop 229
+
+parent: -1
+
+readdir: inside first for loop 230
+
+parent: -1
+
+readdir: inside first for loop 231
+
+parent: -1
+
+readdir: inside first for loop 232
+
+parent: -1
+
+readdir: inside first for loop 233
+
+parent: -1
+
+readdir: inside first for loop 234
+
+parent: -1
+
+readdir: inside first for loop 235
+
+parent: -1
+
+readdir: inside first for loop 236
+
+parent: -1
+
+readdir: inside first for loop 237
+
+parent: -1
+
+readdir: inside first for loop 238
+
+parent: -1
+
+readdir: inside first for loop 239
+
+parent: -1
+
+readdir: inside first for loop 240
+
+parent: -1
+
+readdir: inside first for loop 241
+
+parent: -1
+
+readdir: inside first for loop 242
+
+parent: -1
+
+readdir: inside first for loop 243
+
+parent: -1
+
+readdir: inside first for loop 244
+
+parent: -1
+
+readdir: inside first for loop 245
+
+parent: -1
+
+readdir: inside first for loop 246
+
+parent: -1
+
+readdir: inside first for loop 247
+
+parent: -1
+
+readdir: inside first for loop 248
+
+parent: -1
+
+readdir: inside first for loop 249
+
+parent: -1
+
+readdir: inside first for loop 250
+
+parent: -1
+
+readdir: inside first for loop 251
+
+parent: -1
+
+readdir: inside first for loop 252
+
+parent: -1
+
+readdir: inside first for loop 253
+
+parent: -1
+
+readdir: inside first for loop 254
+
+parent: -1
+
+readdir: inside first for loop 255
+
+parent: -1
+
+sfs_getattr(path="/", statbuf=0x338dcc10)
+get attr returning
+
+sfs_releasedir(path="/", fi=0x338dcc40)
+
+sfs_getattr(path="/isjustinastreetbaby.txt", statbuf=0x340ddc40)
+
+sfs_create(path="/isjustinastreetbaby.txt", mode=0100600, fi=0x338dccf0)
+num_of_inodes in create: 4096
+num_of_inodes in create: 256
+in find_inode
+num_of_inodes: 256
+iterating through bitmap
+testbit ret val: 1
+found a free inode
+in find_block
+testbit ret val: 1
+found a free block
+create is a success with path: /isjustinastreetbaby.txt
+
+sfs_getattr(path="/isjustinastreetbaby.txt", statbuf=0x338dcc00)
+tempgpath: isjustinastreetbaby.txt - isjustinastreetbaby.txt
+
+sfs_release(path="/isjustinastreetbaby.txt", fi=0x338dccf0)
+only 1 slash in the path
+wrote superblock
+filename to be searched for in release: isjustinastreetbaby.txt
+
+sfs_getattr(path="/isjustinastreetbaby.txt", statbuf=0x340ddc40)
+tempgpath: isjustinastreetbaby.txt - isjustinastreetbaby.txt
+
+sfs_getattr(path="/", statbuf=0x340ddc10)
+get attr returning
+
+sfs_opendir(path="/", fi=0x338dcc30)
+
+readdir has begun
+
+readdir: inside first for loop 0
+/
+parent: -2
+
+readdir: inside first for loop 1
+
+parent: -1
+
+readdir: inside first for loop 2
+
+parent: -1
+
+readdir: inside first for loop 3
+
+parent: -1
+
+readdir: inside first for loop 4
+
+parent: -1
+
+readdir: inside first for loop 5
+
+parent: -1
+
+readdir: inside first for loop 6
+
+parent: -1
+
+readdir: inside first for loop 7
+
+parent: -1
+
+readdir: inside first for loop 8
+
+parent: -1
+
+readdir: inside first for loop 9
+
+parent: -1
+
+readdir: inside first for loop 10
+
+parent: -1
+
+readdir: inside first for loop 11
+
+parent: -1
+
+readdir: inside first for loop 12
+
+parent: -1
+
+readdir: inside first for loop 13
+
+parent: -1
+
+readdir: inside first for loop 14
+
+parent: -1
+
+readdir: inside first for loop 15
+
+parent: -1
+
+readdir: inside first for loop 16
+
+parent: -1
+
+readdir: inside first for loop 17
+
+parent: -1
+
+readdir: inside first for loop 18
+
+parent: -1
+
+readdir: inside first for loop 19
+
+parent: -1
+
+readdir: inside first for loop 20
+
+parent: -1
+
+readdir: inside first for loop 21
+
+parent: -1
+
+readdir: inside first for loop 22
+
+parent: -1
+
+readdir: inside first for loop 23
+
+parent: -1
+
+readdir: inside first for loop 24
+
+parent: -1
+
+readdir: inside first for loop 25
+
+parent: -1
+
+readdir: inside first for loop 26
+
+parent: -1
+
+readdir: inside first for loop 27
+
+parent: -1
+
+readdir: inside first for loop 28
+
+parent: -1
+
+readdir: inside first for loop 29
+
+parent: -1
+
+readdir: inside first for loop 30
+
+parent: -1
+
+readdir: inside first for loop 31
+
+parent: -1
+
+readdir: inside first for loop 32
+
+parent: -1
+
+readdir: inside first for loop 33
+
+parent: -1
+
+readdir: inside first for loop 34
+
+parent: -1
+
+readdir: inside first for loop 35
+
+parent: -1
+
+readdir: inside first for loop 36
+
+parent: -1
+
+readdir: inside first for loop 37
+
+parent: -1
+
+readdir: inside first for loop 38
+
+parent: -1
+
+readdir: inside first for loop 39
+
+parent: -1
+
+readdir: inside first for loop 40
+
+parent: -1
+
+readdir: inside first for loop 41
+
+parent: -1
+
+readdir: inside first for loop 42
+
+parent: -1
+
+readdir: inside first for loop 43
+
+parent: -1
+
+readdir: inside first for loop 44
+
+parent: -1
+
+readdir: inside first for loop 45
+
+parent: -1
+
+readdir: inside first for loop 46
+
+parent: -1
+
+readdir: inside first for loop 47
+
+parent: -1
+
+readdir: inside first for loop 48
+
+parent: -1
+
+readdir: inside first for loop 49
+
+parent: -1
+
+readdir: inside first for loop 50
+
+parent: -1
+
+readdir: inside first for loop 51
+
+parent: -1
+
+readdir: inside first for loop 52
+
+parent: -1
+
+readdir: inside first for loop 53
+
+parent: -1
+
+readdir: inside first for loop 54
+
+parent: -1
+
+readdir: inside first for loop 55
+
+parent: -1
+
+readdir: inside first for loop 56
+
+parent: -1
+
+readdir: inside first for loop 57
+
+parent: -1
+
+readdir: inside first for loop 58
+
+parent: -1
+
+readdir: inside first for loop 59
+
+parent: -1
+
+readdir: inside first for loop 60
+
+parent: -1
+
+readdir: inside first for loop 61
+
+parent: -1
+
+readdir: inside first for loop 62
+
+parent: -1
+
+readdir: inside first for loop 63
+
+parent: -1
+
+readdir: inside first for loop 64
+
+parent: -1
+
+readdir: inside first for loop 65
+
+parent: -1
+
+readdir: inside first for loop 66
+
+parent: -1
+
+readdir: inside first for loop 67
+
+parent: -1
+
+readdir: inside first for loop 68
+
+parent: -1
+
+readdir: inside first for loop 69
+
+parent: -1
+
+readdir: inside first for loop 70
+
+parent: -1
+
+readdir: inside first for loop 71
+
+parent: -1
+
+readdir: inside first for loop 72
+
+parent: -1
+
+readdir: inside first for loop 73
+
+parent: -1
+
+readdir: inside first for loop 74
+
+parent: -1
+
+readdir: inside first for loop 75
+
+parent: -1
+
+readdir: inside first for loop 76
+
+parent: -1
+
+readdir: inside first for loop 77
+
+parent: -1
+
+readdir: inside first for loop 78
+
+parent: -1
+
+readdir: inside first for loop 79
+
+parent: -1
+
+readdir: inside first for loop 80
+
+parent: -1
+
+readdir: inside first for loop 81
+
+parent: -1
+
+readdir: inside first for loop 82
+
+parent: -1
+
+readdir: inside first for loop 83
+
+parent: -1
+
+readdir: inside first for loop 84
+
+parent: -1
+
+readdir: inside first for loop 85
+
+parent: -1
+
+readdir: inside first for loop 86
+
+parent: -1
+
+readdir: inside first for loop 87
+
+parent: -1
+
+readdir: inside first for loop 88
+
+parent: -1
+
+readdir: inside first for loop 89
+
+parent: -1
+
+readdir: inside first for loop 90
+
+parent: -1
+
+readdir: inside first for loop 91
+
+parent: -1
+
+readdir: inside first for loop 92
+
+parent: -1
+
+readdir: inside first for loop 93
+
+parent: -1
+
+readdir: inside first for loop 94
+
+parent: -1
+
+readdir: inside first for loop 95
+
+parent: -1
+
+readdir: inside first for loop 96
+
+parent: -1
+
+readdir: inside first for loop 97
+
+parent: -1
+
+readdir: inside first for loop 98
+
+parent: -1
+
+readdir: inside first for loop 99
+
+parent: -1
+
+readdir: inside first for loop 100
+
+parent: -1
+
+readdir: inside first for loop 101
+
+parent: -1
+
+readdir: inside first for loop 102
+
+parent: -1
+
+readdir: inside first for loop 103
+
+parent: -1
+
+readdir: inside first for loop 104
+
+parent: -1
+
+readdir: inside first for loop 105
+
+parent: -1
+
+readdir: inside first for loop 106
+
+parent: -1
+
+readdir: inside first for loop 107
+
+parent: -1
+
+readdir: inside first for loop 108
+
+parent: -1
+
+readdir: inside first for loop 109
+
+parent: -1
+
+readdir: inside first for loop 110
+
+parent: -1
+
+readdir: inside first for loop 111
+
+parent: -1
+
+readdir: inside first for loop 112
+
+parent: -1
+
+readdir: inside first for loop 113
+
+parent: -1
+
+readdir: inside first for loop 114
+
+parent: -1
+
+readdir: inside first for loop 115
+
+parent: -1
+
+readdir: inside first for loop 116
+
+parent: -1
+
+readdir: inside first for loop 117
+
+parent: -1
+
+readdir: inside first for loop 118
+
+parent: -1
+
+readdir: inside first for loop 119
+
+parent: -1
+
+readdir: inside first for loop 120
+
+parent: -1
+
+readdir: inside first for loop 121
+
+parent: -1
+
+readdir: inside first for loop 122
+
+parent: -1
+
+readdir: inside first for loop 123
+
+parent: -1
+
+readdir: inside first for loop 124
+
+parent: -1
+
+readdir: inside first for loop 125
+
+parent: -1
+
+readdir: inside first for loop 126
+
+parent: -1
+
+readdir: inside first for loop 127
+
+parent: -1
+
+readdir: inside first for loop 128
+
+parent: -1
+
+readdir: inside first for loop 129
+
+parent: -1
+
+readdir: inside first for loop 130
+
+parent: -1
+
+readdir: inside first for loop 131
+
+parent: -1
+
+readdir: inside first for loop 132
+
+parent: -1
+
+readdir: inside first for loop 133
+
+parent: -1
+
+readdir: inside first for loop 134
+
+parent: -1
+
+readdir: inside first for loop 135
+
+parent: -1
+
+readdir: inside first for loop 136
+
+parent: -1
+
+readdir: inside first for loop 137
+
+parent: -1
+
+readdir: inside first for loop 138
+
+parent: -1
+
+readdir: inside first for loop 139
+
+parent: -1
+
+readdir: inside first for loop 140
+
+parent: -1
+
+readdir: inside first for loop 141
+
+parent: -1
+
+readdir: inside first for loop 142
+
+parent: -1
+
+readdir: inside first for loop 143
+
+parent: -1
+
+readdir: inside first for loop 144
+
+parent: -1
+
+readdir: inside first for loop 145
+
+parent: -1
+
+readdir: inside first for loop 146
+
+parent: -1
+
+readdir: inside first for loop 147
+
+parent: -1
+
+readdir: inside first for loop 148
+
+parent: -1
+
+readdir: inside first for loop 149
+
+parent: -1
+
+readdir: inside first for loop 150
+
+parent: -1
+
+readdir: inside first for loop 151
+
+parent: -1
+
+readdir: inside first for loop 152
+
+parent: -1
+
+readdir: inside first for loop 153
+
+parent: -1
+
+readdir: inside first for loop 154
+
+parent: -1
+
+readdir: inside first for loop 155
+
+parent: -1
+
+readdir: inside first for loop 156
+
+parent: -1
+
+readdir: inside first for loop 157
+
+parent: -1
+
+readdir: inside first for loop 158
+
+parent: -1
+
+readdir: inside first for loop 159
+
+parent: -1
+
+readdir: inside first for loop 160
+
+parent: -1
+
+readdir: inside first for loop 161
+
+parent: -1
+
+readdir: inside first for loop 162
+
+parent: -1
+
+readdir: inside first for loop 163
+
+parent: -1
+
+readdir: inside first for loop 164
+
+parent: -1
+
+readdir: inside first for loop 165
+
+parent: -1
+
+readdir: inside first for loop 166
+
+parent: -1
+
+readdir: inside first for loop 167
+
+parent: -1
+
+readdir: inside first for loop 168
+
+parent: -1
+
+readdir: inside first for loop 169
+
+parent: -1
+
+readdir: inside first for loop 170
+
+parent: -1
+
+readdir: inside first for loop 171
+
+parent: -1
+
+readdir: inside first for loop 172
+
+parent: -1
+
+readdir: inside first for loop 173
+
+parent: -1
+
+readdir: inside first for loop 174
+
+parent: -1
+
+readdir: inside first for loop 175
+
+parent: -1
+
+readdir: inside first for loop 176
+
+parent: -1
+
+readdir: inside first for loop 177
+
+parent: -1
+
+readdir: inside first for loop 178
+
+parent: -1
+
+readdir: inside first for loop 179
+
+parent: -1
+
+readdir: inside first for loop 180
+
+parent: -1
+
+readdir: inside first for loop 181
+
+parent: -1
+
+readdir: inside first for loop 182
+
+parent: -1
+
+readdir: inside first for loop 183
+
+parent: -1
+
+readdir: inside first for loop 184
+
+parent: -1
+
+readdir: inside first for loop 185
+
+parent: -1
+
+readdir: inside first for loop 186
+
+parent: -1
+
+readdir: inside first for loop 187
+
+parent: -1
+
+readdir: inside first for loop 188
+
+parent: -1
+
+readdir: inside first for loop 189
+
+parent: -1
+
+readdir: inside first for loop 190
+
+parent: -1
+
+readdir: inside first for loop 191
+
+parent: -1
+
+readdir: inside first for loop 192
+
+parent: -1
+
+readdir: inside first for loop 193
+
+parent: -1
+
+readdir: inside first for loop 194
+
+parent: -1
+
+readdir: inside first for loop 195
+
+parent: -1
+
+readdir: inside first for loop 196
+
+parent: -1
+
+readdir: inside first for loop 197
+
+parent: -1
+
+readdir: inside first for loop 198
+
+parent: -1
+
+readdir: inside first for loop 199
+
+parent: -1
+
+readdir: inside first for loop 200
+
+parent: -1
+
+readdir: inside first for loop 201
+
+parent: -1
+
+readdir: inside first for loop 202
+
+parent: -1
+
+readdir: inside first for loop 203
+
+parent: -1
+
+readdir: inside first for loop 204
+
+parent: -1
+
+readdir: inside first for loop 205
+
+parent: -1
+
+readdir: inside first for loop 206
+
+parent: -1
+
+readdir: inside first for loop 207
+
+parent: -1
+
+readdir: inside first for loop 208
+
+parent: -1
+
+readdir: inside first for loop 209
+
+parent: -1
+
+readdir: inside first for loop 210
+
+parent: -1
+
+readdir: inside first for loop 211
+
+parent: -1
+
+readdir: inside first for loop 212
+
+parent: -1
+
+readdir: inside first for loop 213
+
+parent: -1
+
+readdir: inside first for loop 214
+
+parent: -1
+
+readdir: inside first for loop 215
+
+parent: -1
+
+readdir: inside first for loop 216
+
+parent: -1
+
+readdir: inside first for loop 217
+
+parent: -1
+
+readdir: inside first for loop 218
+
+parent: -1
+
+readdir: inside first for loop 219
+
+parent: -1
+
+readdir: inside first for loop 220
+
+parent: -1
+
+readdir: inside first for loop 221
+
+parent: -1
+
+readdir: inside first for loop 222
+
+parent: -1
+
+readdir: inside first for loop 223
+
+parent: -1
+
+readdir: inside first for loop 224
+
+parent: -1
+
+readdir: inside first for loop 225
+
+parent: -1
+
+readdir: inside first for loop 226
+
+parent: -1
+
+readdir: inside first for loop 227
+
+parent: -1
+
+readdir: inside first for loop 228
+
+parent: -1
+
+readdir: inside first for loop 229
+
+parent: -1
+
+readdir: inside first for loop 230
+
+parent: -1
+
+readdir: inside first for loop 231
+
+parent: -1
+
+readdir: inside first for loop 232
+
+parent: -1
+
+readdir: inside first for loop 233
+
+parent: -1
+
+readdir: inside first for loop 234
+
+parent: -1
+
+readdir: inside first for loop 235
+
+parent: -1
+
+readdir: inside first for loop 236
+
+parent: -1
+
+readdir: inside first for loop 237
+
+parent: -1
+
+readdir: inside first for loop 238
+
+parent: -1
+
+readdir: inside first for loop 239
+
+parent: -1
+
+readdir: inside first for loop 240
+
+parent: -1
+
+readdir: inside first for loop 241
+
+parent: -1
+
+readdir: inside first for loop 242
+
+parent: -1
+
+readdir: inside first for loop 243
+
+parent: -1
+
+readdir: inside first for loop 244
+
+parent: -1
+
+readdir: inside first for loop 245
+
+parent: -1
+
+readdir: inside first for loop 246
+
+parent: -1
+
+readdir: inside first for loop 247
+
+parent: -1
+
+readdir: inside first for loop 248
+
+parent: -1
+
+readdir: inside first for loop 249
+
+parent: -1
+
+readdir: inside first for loop 250
+
+parent: -1
+
+readdir: inside first for loop 251
+
+parent: -1
+
+readdir: inside first for loop 252
+
+parent: -1
+
+readdir: inside first for loop 253
+
+parent: -1
+
+readdir: inside first for loop 254
+
+parent: -1
+
+readdir: inside first for loop 255
+
+parent: -1
+
+readdir: inside first for loop 256
+isjustinastreetbaby.txt
+parent: 0
+entered 2nd for loop
+path="isjustinastreetbaby.txt"
+
+sfs_getattr(path="/", statbuf=0x338dcc10)
+get attr returning
+
+sfs_getattr(path="/isjustinastreetbaby.txt", statbuf=0x340ddc40)
+tempgpath: isjustinastreetbaby.txt - isjustinastreetbaby.txt
+
+sfs_releasedir(path="/", fi=0x340ddc40)
+
+sfs_getattr(path="/", statbuf=0x338dcc10)
+get attr returning
+
+sfs_getattr(path="/", statbuf=0x340ddc10)
+get attr returning
+
+sfs_opendir(path="/", fi=0x338dcc30)
+
+readdir has begun
+
+readdir: inside first for loop 0
+/
+parent: -2
+
+readdir: inside first for loop 1
+
+parent: -1
+
+readdir: inside first for loop 2
+
+parent: -1
+
+readdir: inside first for loop 3
+
+parent: -1
+
+readdir: inside first for loop 4
+
+parent: -1
+
+readdir: inside first for loop 5
+
+parent: -1
+
+readdir: inside first for loop 6
+
+parent: -1
+
+readdir: inside first for loop 7
+
+parent: -1
+
+readdir: inside first for loop 8
+
+parent: -1
+
+readdir: inside first for loop 9
+
+parent: -1
+
+readdir: inside first for loop 10
+
+parent: -1
+
+readdir: inside first for loop 11
+
+parent: -1
+
+readdir: inside first for loop 12
+
+parent: -1
+
+readdir: inside first for loop 13
+
+parent: -1
+
+readdir: inside first for loop 14
+
+parent: -1
+
+readdir: inside first for loop 15
+
+parent: -1
+
+readdir: inside first for loop 16
+
+parent: -1
+
+readdir: inside first for loop 17
+
+parent: -1
+
+readdir: inside first for loop 18
+
+parent: -1
+
+readdir: inside first for loop 19
+
+parent: -1
+
+readdir: inside first for loop 20
+
+parent: -1
+
+readdir: inside first for loop 21
+
+parent: -1
+
+readdir: inside first for loop 22
+
+parent: -1
+
+readdir: inside first for loop 23
+
+parent: -1
+
+readdir: inside first for loop 24
+
+parent: -1
+
+readdir: inside first for loop 25
+
+parent: -1
+
+readdir: inside first for loop 26
+
+parent: -1
+
+readdir: inside first for loop 27
+
+parent: -1
+
+readdir: inside first for loop 28
+
+parent: -1
+
+readdir: inside first for loop 29
+
+parent: -1
+
+readdir: inside first for loop 30
+
+parent: -1
+
+readdir: inside first for loop 31
+
+parent: -1
+
+readdir: inside first for loop 32
+
+parent: -1
+
+readdir: inside first for loop 33
+
+parent: -1
+
+readdir: inside first for loop 34
+
+parent: -1
+
+readdir: inside first for loop 35
+
+parent: -1
+
+readdir: inside first for loop 36
+
+parent: -1
+
+readdir: inside first for loop 37
+
+parent: -1
+
+readdir: inside first for loop 38
+
+parent: -1
+
+readdir: inside first for loop 39
+
+parent: -1
+
+readdir: inside first for loop 40
+
+parent: -1
+
+readdir: inside first for loop 41
+
+parent: -1
+
+readdir: inside first for loop 42
+
+parent: -1
+
+readdir: inside first for loop 43
+
+parent: -1
+
+readdir: inside first for loop 44
+
+parent: -1
+
+readdir: inside first for loop 45
+
+parent: -1
+
+readdir: inside first for loop 46
+
+parent: -1
+
+readdir: inside first for loop 47
+
+parent: -1
+
+readdir: inside first for loop 48
+
+parent: -1
+
+readdir: inside first for loop 49
+
+parent: -1
+
+readdir: inside first for loop 50
+
+parent: -1
+
+readdir: inside first for loop 51
+
+parent: -1
+
+readdir: inside first for loop 52
+
+parent: -1
+
+readdir: inside first for loop 53
+
+parent: -1
+
+readdir: inside first for loop 54
+
+parent: -1
+
+readdir: inside first for loop 55
+
+parent: -1
+
+readdir: inside first for loop 56
+
+parent: -1
+
+readdir: inside first for loop 57
+
+parent: -1
+
+readdir: inside first for loop 58
+
+parent: -1
+
+readdir: inside first for loop 59
+
+parent: -1
+
+readdir: inside first for loop 60
+
+parent: -1
+
+readdir: inside first for loop 61
+
+parent: -1
+
+readdir: inside first for loop 62
+
+parent: -1
+
+readdir: inside first for loop 63
+
+parent: -1
+
+readdir: inside first for loop 64
+
+parent: -1
+
+readdir: inside first for loop 65
+
+parent: -1
+
+readdir: inside first for loop 66
+
+parent: -1
+
+readdir: inside first for loop 67
+
+parent: -1
+
+readdir: inside first for loop 68
+
+parent: -1
+
+readdir: inside first for loop 69
+
+parent: -1
+
+readdir: inside first for loop 70
+
+parent: -1
+
+readdir: inside first for loop 71
+
+parent: -1
+
+readdir: inside first for loop 72
+
+parent: -1
+
+readdir: inside first for loop 73
+
+parent: -1
+
+readdir: inside first for loop 74
+
+parent: -1
+
+readdir: inside first for loop 75
+
+parent: -1
+
+readdir: inside first for loop 76
+
+parent: -1
+
+readdir: inside first for loop 77
+
+parent: -1
+
+readdir: inside first for loop 78
+
+parent: -1
+
+readdir: inside first for loop 79
+
+parent: -1
+
+readdir: inside first for loop 80
+
+parent: -1
+
+readdir: inside first for loop 81
+
+parent: -1
+
+readdir: inside first for loop 82
+
+parent: -1
+
+readdir: inside first for loop 83
+
+parent: -1
+
+readdir: inside first for loop 84
+
+parent: -1
+
+readdir: inside first for loop 85
+
+parent: -1
+
+readdir: inside first for loop 86
+
+parent: -1
+
+readdir: inside first for loop 87
+
+parent: -1
+
+readdir: inside first for loop 88
+
+parent: -1
+
+readdir: inside first for loop 89
+
+parent: -1
+
+readdir: inside first for loop 90
+
+parent: -1
+
+readdir: inside first for loop 91
+
+parent: -1
+
+readdir: inside first for loop 92
+
+parent: -1
+
+readdir: inside first for loop 93
+
+parent: -1
+
+readdir: inside first for loop 94
+
+parent: -1
+
+readdir: inside first for loop 95
+
+parent: -1
+
+readdir: inside first for loop 96
+
+parent: -1
+
+readdir: inside first for loop 97
+
+parent: -1
+
+readdir: inside first for loop 98
+
+parent: -1
+
+readdir: inside first for loop 99
+
+parent: -1
+
+readdir: inside first for loop 100
+
+parent: -1
+
+readdir: inside first for loop 101
+
+parent: -1
+
+readdir: inside first for loop 102
+
+parent: -1
+
+readdir: inside first for loop 103
+
+parent: -1
+
+readdir: inside first for loop 104
+
+parent: -1
+
+readdir: inside first for loop 105
+
+parent: -1
+
+readdir: inside first for loop 106
+
+parent: -1
+
+readdir: inside first for loop 107
+
+parent: -1
+
+readdir: inside first for loop 108
+
+parent: -1
+
+readdir: inside first for loop 109
+
+parent: -1
+
+readdir: inside first for loop 110
+
+parent: -1
+
+readdir: inside first for loop 111
+
+parent: -1
+
+readdir: inside first for loop 112
+
+parent: -1
+
+readdir: inside first for loop 113
+
+parent: -1
+
+readdir: inside first for loop 114
+
+parent: -1
+
+readdir: inside first for loop 115
+
+parent: -1
+
+readdir: inside first for loop 116
+
+parent: -1
+
+readdir: inside first for loop 117
+
+parent: -1
+
+readdir: inside first for loop 118
+
+parent: -1
+
+readdir: inside first for loop 119
+
+parent: -1
+
+readdir: inside first for loop 120
+
+parent: -1
+
+readdir: inside first for loop 121
+
+parent: -1
+
+readdir: inside first for loop 122
+
+parent: -1
+
+readdir: inside first for loop 123
+
+parent: -1
+
+readdir: inside first for loop 124
+
+parent: -1
+
+readdir: inside first for loop 125
+
+parent: -1
+
+readdir: inside first for loop 126
+
+parent: -1
+
+readdir: inside first for loop 127
+
+parent: -1
+
+readdir: inside first for loop 128
+
+parent: -1
+
+readdir: inside first for loop 129
+
+parent: -1
+
+readdir: inside first for loop 130
+
+parent: -1
+
+readdir: inside first for loop 131
+
+parent: -1
+
+readdir: inside first for loop 132
+
+parent: -1
+
+readdir: inside first for loop 133
+
+parent: -1
+
+readdir: inside first for loop 134
+
+parent: -1
+
+readdir: inside first for loop 135
+
+parent: -1
+
+readdir: inside first for loop 136
+
+parent: -1
+
+readdir: inside first for loop 137
+
+parent: -1
+
+readdir: inside first for loop 138
+
+parent: -1
+
+readdir: inside first for loop 139
+
+parent: -1
+
+readdir: inside first for loop 140
+
+parent: -1
+
+readdir: inside first for loop 141
+
+parent: -1
+
+readdir: inside first for loop 142
+
+parent: -1
+
+readdir: inside first for loop 143
+
+parent: -1
+
+readdir: inside first for loop 144
+
+parent: -1
+
+readdir: inside first for loop 145
+
+parent: -1
+
+readdir: inside first for loop 146
+
+parent: -1
+
+readdir: inside first for loop 147
+
+parent: -1
+
+readdir: inside first for loop 148
+
+parent: -1
+
+readdir: inside first for loop 149
+
+parent: -1
+
+readdir: inside first for loop 150
+
+parent: -1
+
+readdir: inside first for loop 151
+
+parent: -1
+
+readdir: inside first for loop 152
+
+parent: -1
+
+readdir: inside first for loop 153
+
+parent: -1
+
+readdir: inside first for loop 154
+
+parent: -1
+
+readdir: inside first for loop 155
+
+parent: -1
+
+readdir: inside first for loop 156
+
+parent: -1
+
+readdir: inside first for loop 157
+
+parent: -1
+
+readdir: inside first for loop 158
+
+parent: -1
+
+readdir: inside first for loop 159
+
+parent: -1
+
+readdir: inside first for loop 160
+
+parent: -1
+
+readdir: inside first for loop 161
+
+parent: -1
+
+readdir: inside first for loop 162
+
+parent: -1
+
+readdir: inside first for loop 163
+
+parent: -1
+
+readdir: inside first for loop 164
+
+parent: -1
+
+readdir: inside first for loop 165
+
+parent: -1
+
+readdir: inside first for loop 166
+
+parent: -1
+
+readdir: inside first for loop 167
+
+parent: -1
+
+readdir: inside first for loop 168
+
+parent: -1
+
+readdir: inside first for loop 169
+
+parent: -1
+
+readdir: inside first for loop 170
+
+parent: -1
+
+readdir: inside first for loop 171
+
+parent: -1
+
+readdir: inside first for loop 172
+
+parent: -1
+
+readdir: inside first for loop 173
+
+parent: -1
+
+readdir: inside first for loop 174
+
+parent: -1
+
+readdir: inside first for loop 175
+
+parent: -1
+
+readdir: inside first for loop 176
+
+parent: -1
+
+readdir: inside first for loop 177
+
+parent: -1
+
+readdir: inside first for loop 178
+
+parent: -1
+
+readdir: inside first for loop 179
+
+parent: -1
+
+readdir: inside first for loop 180
+
+parent: -1
+
+readdir: inside first for loop 181
+
+parent: -1
+
+readdir: inside first for loop 182
+
+parent: -1
+
+readdir: inside first for loop 183
+
+parent: -1
+
+readdir: inside first for loop 184
+
+parent: -1
+
+readdir: inside first for loop 185
+
+parent: -1
+
+readdir: inside first for loop 186
+
+parent: -1
+
+readdir: inside first for loop 187
+
+parent: -1
+
+readdir: inside first for loop 188
+
+parent: -1
+
+readdir: inside first for loop 189
+
+parent: -1
+
+readdir: inside first for loop 190
+
+parent: -1
+
+readdir: inside first for loop 191
+
+parent: -1
+
+readdir: inside first for loop 192
+
+parent: -1
+
+readdir: inside first for loop 193
+
+parent: -1
+
+readdir: inside first for loop 194
+
+parent: -1
+
+readdir: inside first for loop 195
+
+parent: -1
+
+readdir: inside first for loop 196
+
+parent: -1
+
+readdir: inside first for loop 197
+
+parent: -1
+
+readdir: inside first for loop 198
+
+parent: -1
+
+readdir: inside first for loop 199
+
+parent: -1
+
+readdir: inside first for loop 200
+
+parent: -1
+
+readdir: inside first for loop 201
+
+parent: -1
+
+readdir: inside first for loop 202
+
+parent: -1
+
+readdir: inside first for loop 203
+
+parent: -1
+
+readdir: inside first for loop 204
+
+parent: -1
+
+readdir: inside first for loop 205
+
+parent: -1
+
+readdir: inside first for loop 206
+
+parent: -1
+
+readdir: inside first for loop 207
+
+parent: -1
+
+readdir: inside first for loop 208
+
+parent: -1
+
+readdir: inside first for loop 209
+
+parent: -1
+
+readdir: inside first for loop 210
+
+parent: -1
+
+readdir: inside first for loop 211
+
+parent: -1
+
+readdir: inside first for loop 212
+
+parent: -1
+
+readdir: inside first for loop 213
+
+parent: -1
+
+readdir: inside first for loop 214
+
+parent: -1
+
+readdir: inside first for loop 215
+
+parent: -1
+
+readdir: inside first for loop 216
+
+parent: -1
+
+readdir: inside first for loop 217
+
+parent: -1
+
+readdir: inside first for loop 218
+
+parent: -1
+
+readdir: inside first for loop 219
+
+parent: -1
+
+readdir: inside first for loop 220
+
+parent: -1
+
+readdir: inside first for loop 221
+
+parent: -1
+
+readdir: inside first for loop 222
+
+parent: -1
+
+readdir: inside first for loop 223
+
+parent: -1
+
+readdir: inside first for loop 224
+
+parent: -1
+
+readdir: inside first for loop 225
+
+parent: -1
+
+readdir: inside first for loop 226
+
+parent: -1
+
+readdir: inside first for loop 227
+
+parent: -1
+
+readdir: inside first for loop 228
+
+parent: -1
+
+readdir: inside first for loop 229
+
+parent: -1
+
+readdir: inside first for loop 230
+
+parent: -1
+
+readdir: inside first for loop 231
+
+parent: -1
+
+readdir: inside first for loop 232
+
+parent: -1
+
+readdir: inside first for loop 233
+
+parent: -1
+
+readdir: inside first for loop 234
+
+parent: -1
+
+readdir: inside first for loop 235
+
+parent: -1
+
+readdir: inside first for loop 236
+
+parent: -1
+
+readdir: inside first for loop 237
+
+parent: -1
+
+readdir: inside first for loop 238
+
+parent: -1
+
+readdir: inside first for loop 239
+
+parent: -1
+
+readdir: inside first for loop 240
+
+parent: -1
+
+readdir: inside first for loop 241
+
+parent: -1
+
+readdir: inside first for loop 242
+
+parent: -1
+
+readdir: inside first for loop 243
+
+parent: -1
+
+readdir: inside first for loop 244
+
+parent: -1
+
+readdir: inside first for loop 245
+
+parent: -1
+
+readdir: inside first for loop 246
+
+parent: -1
+
+readdir: inside first for loop 247
+
+parent: -1
+
+readdir: inside first for loop 248
+
+parent: -1
+
+readdir: inside first for loop 249
+
+parent: -1
+
+readdir: inside first for loop 250
+
+parent: -1
+
+readdir: inside first for loop 251
+
+parent: -1
+
+readdir: inside first for loop 252
+
+parent: -1
+
+readdir: inside first for loop 253
+
+parent: -1
+
+readdir: inside first for loop 254
+
+parent: -1
+
+readdir: inside first for loop 255
+
+parent: -1
+
+readdir: inside first for loop 256
+isjustinastreetbaby.txt
+parent: 0
+entered 2nd for loop
+path="isjustinastreetbaby.txt"
+
+sfs_releasedir(path="/", fi=0x340ddc40)
+
+sfs_getattr(path="/isjustinastreetbaby.txt", statbuf=0x338dcc40)
+tempgpath: isjustinastreetbaby.txt - isjustinastreetbaby.txt
+
+sfs_getattr(path="/", statbuf=0x340ddc10)
+get attr returning
+
+sfs_opendir(path="/", fi=0x338dcc30)
+
+readdir has begun
+
+readdir: inside first for loop 0
+/
+parent: -2
+
+readdir: inside first for loop 1
+
+parent: -1
+
+readdir: inside first for loop 2
+
+parent: -1
+
+readdir: inside first for loop 3
+
+parent: -1
+
+readdir: inside first for loop 4
+
+parent: -1
+
+readdir: inside first for loop 5
+
+parent: -1
+
+readdir: inside first for loop 6
+
+parent: -1
+
+readdir: inside first for loop 7
+
+parent: -1
+
+readdir: inside first for loop 8
+
+parent: -1
+
+readdir: inside first for loop 9
+
+parent: -1
+
+readdir: inside first for loop 10
+
+parent: -1
+
+readdir: inside first for loop 11
+
+parent: -1
+
+readdir: inside first for loop 12
+
+parent: -1
+
+readdir: inside first for loop 13
+
+parent: -1
+
+readdir: inside first for loop 14
+
+parent: -1
+
+readdir: inside first for loop 15
+
+parent: -1
+
+readdir: inside first for loop 16
+
+parent: -1
+
+readdir: inside first for loop 17
+
+parent: -1
+
+readdir: inside first for loop 18
+
+parent: -1
+
+readdir: inside first for loop 19
+
+parent: -1
+
+readdir: inside first for loop 20
+
+parent: -1
+
+readdir: inside first for loop 21
+
+parent: -1
+
+readdir: inside first for loop 22
+
+parent: -1
+
+readdir: inside first for loop 23
+
+parent: -1
+
+readdir: inside first for loop 24
+
+parent: -1
+
+readdir: inside first for loop 25
+
+parent: -1
+
+readdir: inside first for loop 26
+
+parent: -1
+
+readdir: inside first for loop 27
+
+parent: -1
+
+readdir: inside first for loop 28
+
+parent: -1
+
+readdir: inside first for loop 29
+
+parent: -1
+
+readdir: inside first for loop 30
+
+parent: -1
+
+readdir: inside first for loop 31
+
+parent: -1
+
+readdir: inside first for loop 32
+
+parent: -1
+
+readdir: inside first for loop 33
+
+parent: -1
+
+readdir: inside first for loop 34
+
+parent: -1
+
+readdir: inside first for loop 35
+
+parent: -1
+
+readdir: inside first for loop 36
+
+parent: -1
+
+readdir: inside first for loop 37
+
+parent: -1
+
+readdir: inside first for loop 38
+
+parent: -1
+
+readdir: inside first for loop 39
+
+parent: -1
+
+readdir: inside first for loop 40
+
+parent: -1
+
+readdir: inside first for loop 41
+
+parent: -1
+
+readdir: inside first for loop 42
+
+parent: -1
+
+readdir: inside first for loop 43
+
+parent: -1
+
+readdir: inside first for loop 44
+
+parent: -1
+
+readdir: inside first for loop 45
+
+parent: -1
+
+readdir: inside first for loop 46
+
+parent: -1
+
+readdir: inside first for loop 47
+
+parent: -1
+
+readdir: inside first for loop 48
+
+parent: -1
+
+readdir: inside first for loop 49
+
+parent: -1
+
+readdir: inside first for loop 50
+
+parent: -1
+
+readdir: inside first for loop 51
+
+parent: -1
+
+readdir: inside first for loop 52
+
+parent: -1
+
+readdir: inside first for loop 53
+
+parent: -1
+
+readdir: inside first for loop 54
+
+parent: -1
+
+readdir: inside first for loop 55
+
+parent: -1
+
+readdir: inside first for loop 56
+
+parent: -1
+
+readdir: inside first for loop 57
+
+parent: -1
+
+readdir: inside first for loop 58
+
+parent: -1
+
+readdir: inside first for loop 59
+
+parent: -1
+
+readdir: inside first for loop 60
+
+parent: -1
+
+readdir: inside first for loop 61
+
+parent: -1
+
+readdir: inside first for loop 62
+
+parent: -1
+
+readdir: inside first for loop 63
+
+parent: -1
+
+readdir: inside first for loop 64
+
+parent: -1
+
+readdir: inside first for loop 65
+
+parent: -1
+
+readdir: inside first for loop 66
+
+parent: -1
+
+readdir: inside first for loop 67
+
+parent: -1
+
+readdir: inside first for loop 68
+
+parent: -1
+
+readdir: inside first for loop 69
+
+parent: -1
+
+readdir: inside first for loop 70
+
+parent: -1
+
+readdir: inside first for loop 71
+
+parent: -1
+
+readdir: inside first for loop 72
+
+parent: -1
+
+readdir: inside first for loop 73
+
+parent: -1
+
+readdir: inside first for loop 74
+
+parent: -1
+
+readdir: inside first for loop 75
+
+parent: -1
+
+readdir: inside first for loop 76
+
+parent: -1
+
+readdir: inside first for loop 77
+
+parent: -1
+
+readdir: inside first for loop 78
+
+parent: -1
+
+readdir: inside first for loop 79
+
+parent: -1
+
+readdir: inside first for loop 80
+
+parent: -1
+
+readdir: inside first for loop 81
+
+parent: -1
+
+readdir: inside first for loop 82
+
+parent: -1
+
+readdir: inside first for loop 83
+
+parent: -1
+
+readdir: inside first for loop 84
+
+parent: -1
+
+readdir: inside first for loop 85
+
+parent: -1
+
+readdir: inside first for loop 86
+
+parent: -1
+
+readdir: inside first for loop 87
+
+parent: -1
+
+readdir: inside first for loop 88
+
+parent: -1
+
+readdir: inside first for loop 89
+
+parent: -1
+
+readdir: inside first for loop 90
+
+parent: -1
+
+readdir: inside first for loop 91
+
+parent: -1
+
+readdir: inside first for loop 92
+
+parent: -1
+
+readdir: inside first for loop 93
+
+parent: -1
+
+readdir: inside first for loop 94
+
+parent: -1
+
+readdir: inside first for loop 95
+
+parent: -1
+
+readdir: inside first for loop 96
+
+parent: -1
+
+readdir: inside first for loop 97
+
+parent: -1
+
+readdir: inside first for loop 98
+
+parent: -1
+
+readdir: inside first for loop 99
+
+parent: -1
+
+readdir: inside first for loop 100
+
+parent: -1
+
+readdir: inside first for loop 101
+
+parent: -1
+
+readdir: inside first for loop 102
+
+parent: -1
+
+readdir: inside first for loop 103
+
+parent: -1
+
+readdir: inside first for loop 104
+
+parent: -1
+
+readdir: inside first for loop 105
+
+parent: -1
+
+readdir: inside first for loop 106
+
+parent: -1
+
+readdir: inside first for loop 107
+
+parent: -1
+
+readdir: inside first for loop 108
+
+parent: -1
+
+readdir: inside first for loop 109
+
+parent: -1
+
+readdir: inside first for loop 110
+
+parent: -1
+
+readdir: inside first for loop 111
+
+parent: -1
+
+readdir: inside first for loop 112
+
+parent: -1
+
+readdir: inside first for loop 113
+
+parent: -1
+
+readdir: inside first for loop 114
+
+parent: -1
+
+readdir: inside first for loop 115
+
+parent: -1
+
+readdir: inside first for loop 116
+
+parent: -1
+
+readdir: inside first for loop 117
+
+parent: -1
+
+readdir: inside first for loop 118
+
+parent: -1
+
+readdir: inside first for loop 119
+
+parent: -1
+
+readdir: inside first for loop 120
+
+parent: -1
+
+readdir: inside first for loop 121
+
+parent: -1
+
+readdir: inside first for loop 122
+
+parent: -1
+
+readdir: inside first for loop 123
+
+parent: -1
+
+readdir: inside first for loop 124
+
+parent: -1
+
+readdir: inside first for loop 125
+
+parent: -1
+
+readdir: inside first for loop 126
+
+parent: -1
+
+readdir: inside first for loop 127
+
+parent: -1
+
+readdir: inside first for loop 128
+
+parent: -1
+
+readdir: inside first for loop 129
+
+parent: -1
+
+readdir: inside first for loop 130
+
+parent: -1
+
+readdir: inside first for loop 131
+
+parent: -1
+
+readdir: inside first for loop 132
+
+parent: -1
+
+readdir: inside first for loop 133
+
+parent: -1
+
+readdir: inside first for loop 134
+
+parent: -1
+
+readdir: inside first for loop 135
+
+parent: -1
+
+readdir: inside first for loop 136
+
+parent: -1
+
+readdir: inside first for loop 137
+
+parent: -1
+
+readdir: inside first for loop 138
+
+parent: -1
+
+readdir: inside first for loop 139
+
+parent: -1
+
+readdir: inside first for loop 140
+
+parent: -1
+
+readdir: inside first for loop 141
+
+parent: -1
+
+readdir: inside first for loop 142
+
+parent: -1
+
+readdir: inside first for loop 143
+
+parent: -1
+
+readdir: inside first for loop 144
+
+parent: -1
+
+readdir: inside first for loop 145
+
+parent: -1
+
+readdir: inside first for loop 146
+
+parent: -1
+
+readdir: inside first for loop 147
+
+parent: -1
+
+readdir: inside first for loop 148
+
+parent: -1
+
+readdir: inside first for loop 149
+
+parent: -1
+
+readdir: inside first for loop 150
+
+parent: -1
+
+readdir: inside first for loop 151
+
+parent: -1
+
+readdir: inside first for loop 152
+
+parent: -1
+
+readdir: inside first for loop 153
+
+parent: -1
+
+readdir: inside first for loop 154
+
+parent: -1
+
+readdir: inside first for loop 155
+
+parent: -1
+
+readdir: inside first for loop 156
+
+parent: -1
+
+readdir: inside first for loop 157
+
+parent: -1
+
+readdir: inside first for loop 158
+
+parent: -1
+
+readdir: inside first for loop 159
+
+parent: -1
+
+readdir: inside first for loop 160
+
+parent: -1
+
+readdir: inside first for loop 161
+
+parent: -1
+
+readdir: inside first for loop 162
+
+parent: -1
+
+readdir: inside first for loop 163
+
+parent: -1
+
+readdir: inside first for loop 164
+
+parent: -1
+
+readdir: inside first for loop 165
+
+parent: -1
+
+readdir: inside first for loop 166
+
+parent: -1
+
+readdir: inside first for loop 167
+
+parent: -1
+
+readdir: inside first for loop 168
+
+parent: -1
+
+readdir: inside first for loop 169
+
+parent: -1
+
+readdir: inside first for loop 170
+
+parent: -1
+
+readdir: inside first for loop 171
+
+parent: -1
+
+readdir: inside first for loop 172
+
+parent: -1
+
+readdir: inside first for loop 173
+
+parent: -1
+
+readdir: inside first for loop 174
+
+parent: -1
+
+readdir: inside first for loop 175
+
+parent: -1
+
+readdir: inside first for loop 176
+
+parent: -1
+
+readdir: inside first for loop 177
+
+parent: -1
+
+readdir: inside first for loop 178
+
+parent: -1
+
+readdir: inside first for loop 179
+
+parent: -1
+
+readdir: inside first for loop 180
+
+parent: -1
+
+readdir: inside first for loop 181
+
+parent: -1
+
+readdir: inside first for loop 182
+
+parent: -1
+
+readdir: inside first for loop 183
+
+parent: -1
+
+readdir: inside first for loop 184
+
+parent: -1
+
+readdir: inside first for loop 185
+
+parent: -1
+
+readdir: inside first for loop 186
+
+parent: -1
+
+readdir: inside first for loop 187
+
+parent: -1
+
+readdir: inside first for loop 188
+
+parent: -1
+
+readdir: inside first for loop 189
+
+parent: -1
+
+readdir: inside first for loop 190
+
+parent: -1
+
+readdir: inside first for loop 191
+
+parent: -1
+
+readdir: inside first for loop 192
+
+parent: -1
+
+readdir: inside first for loop 193
+
+parent: -1
+
+readdir: inside first for loop 194
+
+parent: -1
+
+readdir: inside first for loop 195
+
+parent: -1
+
+readdir: inside first for loop 196
+
+parent: -1
+
+readdir: inside first for loop 197
+
+parent: -1
+
+readdir: inside first for loop 198
+
+parent: -1
+
+readdir: inside first for loop 199
+
+parent: -1
+
+readdir: inside first for loop 200
+
+parent: -1
+
+readdir: inside first for loop 201
+
+parent: -1
+
+readdir: inside first for loop 202
+
+parent: -1
+
+readdir: inside first for loop 203
+
+parent: -1
+
+readdir: inside first for loop 204
+
+parent: -1
+
+readdir: inside first for loop 205
+
+parent: -1
+
+readdir: inside first for loop 206
+
+parent: -1
+
+readdir: inside first for loop 207
+
+parent: -1
+
+readdir: inside first for loop 208
+
+parent: -1
+
+readdir: inside first for loop 209
+
+parent: -1
+
+readdir: inside first for loop 210
+
+parent: -1
+
+readdir: inside first for loop 211
+
+parent: -1
+
+readdir: inside first for loop 212
+
+parent: -1
+
+readdir: inside first for loop 213
+
+parent: -1
+
+readdir: inside first for loop 214
+
+parent: -1
+
+readdir: inside first for loop 215
+
+parent: -1
+
+readdir: inside first for loop 216
+
+parent: -1
+
+readdir: inside first for loop 217
+
+parent: -1
+
+readdir: inside first for loop 218
+
+parent: -1
+
+readdir: inside first for loop 219
+
+parent: -1
+
+readdir: inside first for loop 220
+
+parent: -1
+
+readdir: inside first for loop 221
+
+parent: -1
+
+readdir: inside first for loop 222
+
+parent: -1
+
+readdir: inside first for loop 223
+
+parent: -1
+
+readdir: inside first for loop 224
+
+parent: -1
+
+readdir: inside first for loop 225
+
+parent: -1
+
+readdir: inside first for loop 226
+
+parent: -1
+
+readdir: inside first for loop 227
+
+parent: -1
+
+readdir: inside first for loop 228
+
+parent: -1
+
+readdir: inside first for loop 229
+
+parent: -1
+
+readdir: inside first for loop 230
+
+parent: -1
+
+readdir: inside first for loop 231
+
+parent: -1
+
+readdir: inside first for loop 232
+
+parent: -1
+
+readdir: inside first for loop 233
+
+parent: -1
+
+readdir: inside first for loop 234
+
+parent: -1
+
+readdir: inside first for loop 235
+
+parent: -1
+
+readdir: inside first for loop 236
+
+parent: -1
+
+readdir: inside first for loop 237
+
+parent: -1
+
+readdir: inside first for loop 238
+
+parent: -1
+
+readdir: inside first for loop 239
+
+parent: -1
+
+readdir: inside first for loop 240
+
+parent: -1
+
+readdir: inside first for loop 241
+
+parent: -1
+
+readdir: inside first for loop 242
+
+parent: -1
+
+readdir: inside first for loop 243
+
+parent: -1
+
+readdir: inside first for loop 244
+
+parent: -1
+
+readdir: inside first for loop 245
+
+parent: -1
+
+readdir: inside first for loop 246
+
+parent: -1
+
+readdir: inside first for loop 247
+
+parent: -1
+
+readdir: inside first for loop 248
+
+parent: -1
+
+readdir: inside first for loop 249
+
+parent: -1
+
+readdir: inside first for loop 250
+
+parent: -1
+
+readdir: inside first for loop 251
+
+parent: -1
+
+readdir: inside first for loop 252
+
+parent: -1
+
+readdir: inside first for loop 253
+
+parent: -1
+
+readdir: inside first for loop 254
+
+parent: -1
+
+readdir: inside first for loop 255
+
+parent: -1
+
+readdir: inside first for loop 256
+isjustinastreetbaby.txt
+parent: 0
+entered 2nd for loop
+path="isjustinastreetbaby.txt"
+
+sfs_releasedir(path="/", fi=0x340ddc40)
+
+sfs_getattr(path="/isjustinastreetbaby.txt", statbuf=0x338dcc40)
+tempgpath: isjustinastreetbaby.txt - isjustinastreetbaby.txt
+
+sfs_opendir(path="/isjustinastreetbaby.txt", fi=0x340ddc30)
+
+sfs_releasedir(path="/isjustinastreetbaby.txt", fi=0x338dcc40)
+
+sfs_getattr(path="/isjustinastreetbaby.txt", statbuf=0x340ddc40)
+tempgpath: isjustinastreetbaby.txt - isjustinastreetbaby.txt
+
+sfs_opendir(path="/isjustinastreetbaby.txt", fi=0x338dcc30)
+
+sfs_releasedir(path="/isjustinastreetbaby.txt", fi=0x340ddc40)
+
+sfs_getattr(path="/", statbuf=0x338dcc10)
+get attr returning
+
+sfs_getattr(path="/isvinceastreetbaby.txt", statbuf=0x340ddc40)
+tempgpath: isjustinastreetbaby.txt - isvinceastreetbaby.txt
+
+sfs_create(path="/isvinceastreetbaby.txt", mode=0100600, fi=0x338dccf0)
+num_of_inodes in create: 4096
+num_of_inodes in create: 257
+in find_inode
+num_of_inodes: 257
+iterating through bitmap
+testbit ret val: 1
+found a free inode
+in find_block
+testbit ret val: 1
+found a free block
+create is a success with path: /isvinceastreetbaby.txt
+
+sfs_getattr(path="/isvinceastreetbaby.txt", statbuf=0x338dcc00)
+tempgpath: isvinceastreetbaby.txt - isvinceastreetbaby.txt
+
+sfs_release(path="/isvinceastreetbaby.txt", fi=0x338dccf0)
+only 1 slash in the path
+wrote superblock
+filename to be searched for in release: isvinceastreetbaby.txt
+
+sfs_getattr(path="/isvinceastreetbaby.txt", statbuf=0x340ddc40)
+tempgpath: isvinceastreetbaby.txt - isvinceastreetbaby.txt
+
+sfs_getattr(path="/", statbuf=0x340ddc10)
+get attr returning
+
+sfs_opendir(path="/", fi=0x338dcc30)
+
+readdir has begun
+
+readdir: inside first for loop 0
+/
+parent: -2
+
+readdir: inside first for loop 1
+
+parent: -1
+
+readdir: inside first for loop 2
+
+parent: -1
+
+readdir: inside first for loop 3
+
+parent: -1
+
+readdir: inside first for loop 4
+
+parent: -1
+
+readdir: inside first for loop 5
+
+parent: -1
+
+readdir: inside first for loop 6
+
+parent: -1
+
+readdir: inside first for loop 7
+
+parent: -1
+
+readdir: inside first for loop 8
+
+parent: -1
+
+readdir: inside first for loop 9
+
+parent: -1
+
+readdir: inside first for loop 10
+
+parent: -1
+
+readdir: inside first for loop 11
+
+parent: -1
+
+readdir: inside first for loop 12
+
+parent: -1
+
+readdir: inside first for loop 13
+
+parent: -1
+
+readdir: inside first for loop 14
+
+parent: -1
+
+readdir: inside first for loop 15
+
+parent: -1
+
+readdir: inside first for loop 16
+
+parent: -1
+
+readdir: inside first for loop 17
+
+parent: -1
+
+readdir: inside first for loop 18
+
+parent: -1
+
+readdir: inside first for loop 19
+
+parent: -1
+
+readdir: inside first for loop 20
+
+parent: -1
+
+readdir: inside first for loop 21
+
+parent: -1
+
+readdir: inside first for loop 22
+
+parent: -1
+
+readdir: inside first for loop 23
+
+parent: -1
+
+readdir: inside first for loop 24
+
+parent: -1
+
+readdir: inside first for loop 25
+
+parent: -1
+
+readdir: inside first for loop 26
+
+parent: -1
+
+readdir: inside first for loop 27
+
+parent: -1
+
+readdir: inside first for loop 28
+
+parent: -1
+
+readdir: inside first for loop 29
+
+parent: -1
+
+readdir: inside first for loop 30
+
+parent: -1
+
+readdir: inside first for loop 31
+
+parent: -1
+
+readdir: inside first for loop 32
+
+parent: -1
+
+readdir: inside first for loop 33
+
+parent: -1
+
+readdir: inside first for loop 34
+
+parent: -1
+
+readdir: inside first for loop 35
+
+parent: -1
+
+readdir: inside first for loop 36
+
+parent: -1
+
+readdir: inside first for loop 37
+
+parent: -1
+
+readdir: inside first for loop 38
+
+parent: -1
+
+readdir: inside first for loop 39
+
+parent: -1
+
+readdir: inside first for loop 40
+
+parent: -1
+
+readdir: inside first for loop 41
+
+parent: -1
+
+readdir: inside first for loop 42
+
+parent: -1
+
+readdir: inside first for loop 43
+
+parent: -1
+
+readdir: inside first for loop 44
+
+parent: -1
+
+readdir: inside first for loop 45
+
+parent: -1
+
+readdir: inside first for loop 46
+
+parent: -1
+
+readdir: inside first for loop 47
+
+parent: -1
+
+readdir: inside first for loop 48
+
+parent: -1
+
+readdir: inside first for loop 49
+
+parent: -1
+
+readdir: inside first for loop 50
+
+parent: -1
+
+readdir: inside first for loop 51
+
+parent: -1
+
+readdir: inside first for loop 52
+
+parent: -1
+
+readdir: inside first for loop 53
+
+parent: -1
+
+readdir: inside first for loop 54
+
+parent: -1
+
+readdir: inside first for loop 55
+
+parent: -1
+
+readdir: inside first for loop 56
+
+parent: -1
+
+readdir: inside first for loop 57
+
+parent: -1
+
+readdir: inside first for loop 58
+
+parent: -1
+
+readdir: inside first for loop 59
+
+parent: -1
+
+readdir: inside first for loop 60
+
+parent: -1
+
+readdir: inside first for loop 61
+
+parent: -1
+
+readdir: inside first for loop 62
+
+parent: -1
+
+readdir: inside first for loop 63
+
+parent: -1
+
+readdir: inside first for loop 64
+
+parent: -1
+
+readdir: inside first for loop 65
+
+parent: -1
+
+readdir: inside first for loop 66
+
+parent: -1
+
+readdir: inside first for loop 67
+
+parent: -1
+
+readdir: inside first for loop 68
+
+parent: -1
+
+readdir: inside first for loop 69
+
+parent: -1
+
+readdir: inside first for loop 70
+
+parent: -1
+
+readdir: inside first for loop 71
+
+parent: -1
+
+readdir: inside first for loop 72
+
+parent: -1
+
+readdir: inside first for loop 73
+
+parent: -1
+
+readdir: inside first for loop 74
+
+parent: -1
+
+readdir: inside first for loop 75
+
+parent: -1
+
+readdir: inside first for loop 76
+
+parent: -1
+
+readdir: inside first for loop 77
+
+parent: -1
+
+readdir: inside first for loop 78
+
+parent: -1
+
+readdir: inside first for loop 79
+
+parent: -1
+
+readdir: inside first for loop 80
+
+parent: -1
+
+readdir: inside first for loop 81
+
+parent: -1
+
+readdir: inside first for loop 82
+
+parent: -1
+
+readdir: inside first for loop 83
+
+parent: -1
+
+readdir: inside first for loop 84
+
+parent: -1
+
+readdir: inside first for loop 85
+
+parent: -1
+
+readdir: inside first for loop 86
+
+parent: -1
+
+readdir: inside first for loop 87
+
+parent: -1
+
+readdir: inside first for loop 88
+
+parent: -1
+
+readdir: inside first for loop 89
+
+parent: -1
+
+readdir: inside first for loop 90
+
+parent: -1
+
+readdir: inside first for loop 91
+
+parent: -1
+
+readdir: inside first for loop 92
+
+parent: -1
+
+readdir: inside first for loop 93
+
+parent: -1
+
+readdir: inside first for loop 94
+
+parent: -1
+
+readdir: inside first for loop 95
+
+parent: -1
+
+readdir: inside first for loop 96
+
+parent: -1
+
+readdir: inside first for loop 97
+
+parent: -1
+
+readdir: inside first for loop 98
+
+parent: -1
+
+readdir: inside first for loop 99
+
+parent: -1
+
+readdir: inside first for loop 100
+
+parent: -1
+
+readdir: inside first for loop 101
+
+parent: -1
+
+readdir: inside first for loop 102
+
+parent: -1
+
+readdir: inside first for loop 103
+
+parent: -1
+
+readdir: inside first for loop 104
+
+parent: -1
+
+readdir: inside first for loop 105
+
+parent: -1
+
+readdir: inside first for loop 106
+
+parent: -1
+
+readdir: inside first for loop 107
+
+parent: -1
+
+readdir: inside first for loop 108
+
+parent: -1
+
+readdir: inside first for loop 109
+
+parent: -1
+
+readdir: inside first for loop 110
+
+parent: -1
+
+readdir: inside first for loop 111
+
+parent: -1
+
+readdir: inside first for loop 112
+
+parent: -1
+
+readdir: inside first for loop 113
+
+parent: -1
+
+readdir: inside first for loop 114
+
+parent: -1
+
+readdir: inside first for loop 115
+
+parent: -1
+
+readdir: inside first for loop 116
+
+parent: -1
+
+readdir: inside first for loop 117
+
+parent: -1
+
+readdir: inside first for loop 118
+
+parent: -1
+
+readdir: inside first for loop 119
+
+parent: -1
+
+readdir: inside first for loop 120
+
+parent: -1
+
+readdir: inside first for loop 121
+
+parent: -1
+
+readdir: inside first for loop 122
+
+parent: -1
+
+readdir: inside first for loop 123
+
+parent: -1
+
+readdir: inside first for loop 124
+
+parent: -1
+
+readdir: inside first for loop 125
+
+parent: -1
+
+readdir: inside first for loop 126
+
+parent: -1
+
+readdir: inside first for loop 127
+
+parent: -1
+
+readdir: inside first for loop 128
+
+parent: -1
+
+readdir: inside first for loop 129
+
+parent: -1
+
+readdir: inside first for loop 130
+
+parent: -1
+
+readdir: inside first for loop 131
+
+parent: -1
+
+readdir: inside first for loop 132
+
+parent: -1
+
+readdir: inside first for loop 133
+
+parent: -1
+
+readdir: inside first for loop 134
+
+parent: -1
+
+readdir: inside first for loop 135
+
+parent: -1
+
+readdir: inside first for loop 136
+
+parent: -1
+
+readdir: inside first for loop 137
+
+parent: -1
+
+readdir: inside first for loop 138
+
+parent: -1
+
+readdir: inside first for loop 139
+
+parent: -1
+
+readdir: inside first for loop 140
+
+parent: -1
+
+readdir: inside first for loop 141
+
+parent: -1
+
+readdir: inside first for loop 142
+
+parent: -1
+
+readdir: inside first for loop 143
+
+parent: -1
+
+readdir: inside first for loop 144
+
+parent: -1
+
+readdir: inside first for loop 145
+
+parent: -1
+
+readdir: inside first for loop 146
+
+parent: -1
+
+readdir: inside first for loop 147
+
+parent: -1
+
+readdir: inside first for loop 148
+
+parent: -1
+
+readdir: inside first for loop 149
+
+parent: -1
+
+readdir: inside first for loop 150
+
+parent: -1
+
+readdir: inside first for loop 151
+
+parent: -1
+
+readdir: inside first for loop 152
+
+parent: -1
+
+readdir: inside first for loop 153
+
+parent: -1
+
+readdir: inside first for loop 154
+
+parent: -1
+
+readdir: inside first for loop 155
+
+parent: -1
+
+readdir: inside first for loop 156
+
+parent: -1
+
+readdir: inside first for loop 157
+
+parent: -1
+
+readdir: inside first for loop 158
+
+parent: -1
+
+readdir: inside first for loop 159
+
+parent: -1
+
+readdir: inside first for loop 160
+
+parent: -1
+
+readdir: inside first for loop 161
+
+parent: -1
+
+readdir: inside first for loop 162
+
+parent: -1
+
+readdir: inside first for loop 163
+
+parent: -1
+
+readdir: inside first for loop 164
+
+parent: -1
+
+readdir: inside first for loop 165
+
+parent: -1
+
+readdir: inside first for loop 166
+
+parent: -1
+
+readdir: inside first for loop 167
+
+parent: -1
+
+readdir: inside first for loop 168
+
+parent: -1
+
+readdir: inside first for loop 169
+
+parent: -1
+
+readdir: inside first for loop 170
+
+parent: -1
+
+readdir: inside first for loop 171
+
+parent: -1
+
+readdir: inside first for loop 172
+
+parent: -1
+
+readdir: inside first for loop 173
+
+parent: -1
+
+readdir: inside first for loop 174
+
+parent: -1
+
+readdir: inside first for loop 175
+
+parent: -1
+
+readdir: inside first for loop 176
+
+parent: -1
+
+readdir: inside first for loop 177
+
+parent: -1
+
+readdir: inside first for loop 178
+
+parent: -1
+
+readdir: inside first for loop 179
+
+parent: -1
+
+readdir: inside first for loop 180
+
+parent: -1
+
+readdir: inside first for loop 181
+
+parent: -1
+
+readdir: inside first for loop 182
+
+parent: -1
+
+readdir: inside first for loop 183
+
+parent: -1
+
+readdir: inside first for loop 184
+
+parent: -1
+
+readdir: inside first for loop 185
+
+parent: -1
+
+readdir: inside first for loop 186
+
+parent: -1
+
+readdir: inside first for loop 187
+
+parent: -1
+
+readdir: inside first for loop 188
+
+parent: -1
+
+readdir: inside first for loop 189
+
+parent: -1
+
+readdir: inside first for loop 190
+
+parent: -1
+
+readdir: inside first for loop 191
+
+parent: -1
+
+readdir: inside first for loop 192
+
+parent: -1
+
+readdir: inside first for loop 193
+
+parent: -1
+
+readdir: inside first for loop 194
+
+parent: -1
+
+readdir: inside first for loop 195
+
+parent: -1
+
+readdir: inside first for loop 196
+
+parent: -1
+
+readdir: inside first for loop 197
+
+parent: -1
+
+readdir: inside first for loop 198
+
+parent: -1
+
+readdir: inside first for loop 199
+
+parent: -1
+
+readdir: inside first for loop 200
+
+parent: -1
+
+readdir: inside first for loop 201
+
+parent: -1
+
+readdir: inside first for loop 202
+
+parent: -1
+
+readdir: inside first for loop 203
+
+parent: -1
+
+readdir: inside first for loop 204
+
+parent: -1
+
+readdir: inside first for loop 205
+
+parent: -1
+
+readdir: inside first for loop 206
+
+parent: -1
+
+readdir: inside first for loop 207
+
+parent: -1
+
+readdir: inside first for loop 208
+
+parent: -1
+
+readdir: inside first for loop 209
+
+parent: -1
+
+readdir: inside first for loop 210
+
+parent: -1
+
+readdir: inside first for loop 211
+
+parent: -1
+
+readdir: inside first for loop 212
+
+parent: -1
+
+readdir: inside first for loop 213
+
+parent: -1
+
+readdir: inside first for loop 214
+
+parent: -1
+
+readdir: inside first for loop 215
+
+parent: -1
+
+readdir: inside first for loop 216
+
+parent: -1
+
+readdir: inside first for loop 217
+
+parent: -1
+
+readdir: inside first for loop 218
+
+parent: -1
+
+readdir: inside first for loop 219
+
+parent: -1
+
+readdir: inside first for loop 220
+
+parent: -1
+
+readdir: inside first for loop 221
+
+parent: -1
+
+readdir: inside first for loop 222
+
+parent: -1
+
+readdir: inside first for loop 223
+
+parent: -1
+
+readdir: inside first for loop 224
+
+parent: -1
+
+readdir: inside first for loop 225
+
+parent: -1
+
+readdir: inside first for loop 226
+
+parent: -1
+
+readdir: inside first for loop 227
+
+parent: -1
+
+readdir: inside first for loop 228
+
+parent: -1
+
+readdir: inside first for loop 229
+
+parent: -1
+
+readdir: inside first for loop 230
+
+parent: -1
+
+readdir: inside first for loop 231
+
+parent: -1
+
+readdir: inside first for loop 232
+
+parent: -1
+
+readdir: inside first for loop 233
+
+parent: -1
+
+readdir: inside first for loop 234
+
+parent: -1
+
+readdir: inside first for loop 235
+
+parent: -1
+
+readdir: inside first for loop 236
+
+parent: -1
+
+readdir: inside first for loop 237
+
+parent: -1
+
+readdir: inside first for loop 238
+
+parent: -1
+
+readdir: inside first for loop 239
+
+parent: -1
+
+readdir: inside first for loop 240
+
+parent: -1
+
+readdir: inside first for loop 241
+
+parent: -1
+
+readdir: inside first for loop 242
+
+parent: -1
+
+readdir: inside first for loop 243
+
+parent: -1
+
+readdir: inside first for loop 244
+
+parent: -1
+
+readdir: inside first for loop 245
+
+parent: -1
+
+readdir: inside first for loop 246
+
+parent: -1
+
+readdir: inside first for loop 247
+
+parent: -1
+
+readdir: inside first for loop 248
+
+parent: -1
+
+readdir: inside first for loop 249
+
+parent: -1
+
+readdir: inside first for loop 250
+
+parent: -1
+
+readdir: inside first for loop 251
+
+parent: -1
+
+readdir: inside first for loop 252
+
+parent: -1
+
+readdir: inside first for loop 253
+
+parent: -1
+
+readdir: inside first for loop 254
+
+parent: -1
+
+readdir: inside first for loop 255
+
+parent: -1
+
+readdir: inside first for loop 256
+isvinceastreetbaby.txt
+parent: 0
+entered 2nd for loop
+path="isvinceastreetbaby.txt"
+
+readdir: inside first for loop 257
+
+parent: 0
+entered 2nd for loop
+path=""
+
+sfs_getattr(path="/", statbuf=0x338dcc10)
+get attr returning
+
+sfs_getattr(path="/isvinceastreetbaby.txt", statbuf=0x340ddc40)
+tempgpath: isvinceastreetbaby.txt - isvinceastreetbaby.txt
+
+sfs_releasedir(path="/", fi=0x340ddc40)
