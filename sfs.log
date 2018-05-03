@@ -1,0 +1,123 @@
+
+sfs_init()
+    conn:
+    proto_major = 7
+    proto_minor = 22
+    async_read = 1
+    max_write = 131072
+    max_readahead = 131072
+    capable = 00000ffb
+    want = 00000010
+    context:
+    fuse = 0143b4b0
+    uid = 0
+    gid = 0
+    pid = 0
+    private_data = 0143b010
+    logfile = 0143b030
+    diskfile = /.freespace/ls949/testfsfile
+    umask = 00000
+
+sfs_getattr(path="/hello.txt", statbuf=0x0c981c40)
+
+sfs_getattr(path="/hello.txt", statbuf=0x07ffec40)
+
+sfs_getattr(path="/hello2.txt", statbuf=0x0c981c40)
+
+sfs_create(path="/hello2.txt", mode=0100600, fi=0x07ffecf0)
+num_of_inodes in create: 4096
+num_of_inodes in create: 256
+in find_inode
+num_of_inodes: 256
+num of inodes: 256
+testbit ret val: 0
+found a free inode
+in find_block
+testbit ret val: 0
+found a free block
+inode returned: 1
+data block returned: 1
+path before strcpy: /hello2.txt
+path after strcpy: /hello2.txt
+create is inserting filename hello2.txt into new inode
+create is a success with path: /hello2.txt
+
+sfs_getattr(path="/hello2.txt", statbuf=0x07ffec00)
+tempgpath: hello2.txt - hello2.txt
+ISA FILE BITCH
+
+sfs_release(path="/hello2.txt", fi=0x07ffecf0)
+only 1 slash in the path
+works so far
+wrote superblock
+filename to be searched for in release: hello2.txt
+release ended
+sfs_getattr(path="/", statbuf=0x0c981c10)
+get attr returning
+
+sfs_opendir(path="/", fi=0x0c981c30)
+
+readdir has begun
+entered 2nd for loop
+path="hello2.txt"
+entered 2nd for loop
+path=""
+
+sfs_getattr(path="/", statbuf=0x0c981c10)
+get attr returning
+
+sfs_getattr(path="/hello2.txt", statbuf=0x07ffec40)
+tempgpath: hello2.txt - hello2.txt
+ISA FILE BITCH
+
+sfs_releasedir(path="/", fi=0x07ffec40)
+
+sfs_getattr(path="/hello2.txt", statbuf=0x0c981c40)
+tempgpath: hello2.txt - hello2.txt
+ISA FILE BITCH
+sfs_unlink(path="/hello2.txt")
+unlink is successful with path: /hello2.txt
+
+sfs_getattr(path="/", statbuf=0x0c981c10)
+get attr returning
+
+sfs_opendir(path="/", fi=0x07ffec30)
+
+readdir has begun
+
+sfs_getattr(path="/", statbuf=0x07ffec10)
+get attr returning
+
+sfs_releasedir(path="/", fi=0x07ffec40)
+
+sfs_getattr(path="/hello2.txt", statbuf=0x0c981c40)
+
+sfs_create(path="/hello2.txt", mode=0100600, fi=0x07ffecf0)
+num_of_inodes in create: 4096
+num_of_inodes in create: 256
+in find_inode
+num_of_inodes: 256
+num of inodes: 256
+testbit ret val: 0
+found a free inode
+in find_block
+testbit ret val: 2
+testbit ret val: 0
+found a free block
+inode returned: 1
+data block returned: 2
+path before strcpy: /hello2.txt
+path after strcpy: /hello2.txt
+create is inserting filename hello2.txt into new inode
+create is a success with path: /hello2.txt
+
+sfs_getattr(path="/hello2.txt", statbuf=0x07ffec00)
+tempgpath: hello2.txt - hello2.txt
+ISA FILE BITCH
+
+sfs_release(path="/hello2.txt", fi=0x0c981cf0)
+only 1 slash in the path
+works so far
+wrote superblock
+filename to be searched for in release: hello2.txt
+release ended
