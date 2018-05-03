@@ -1401,15 +1401,14 @@ int sfs_mkdir(const char *path, mode_t mode)
 		//modify bitmaps with indices: dposition, iposition
 
 		//initialize new inode
-		inode_table[i].num=iposition;
-		inode_table[i].type=IS_DIR;
-		inode_table[i].isOpen=IS_OPEN;//open it 
-		strcpy(inode_table[i].filename,token);
-		inode_table[i].parent=0;
-		inode_table[i].size=0;
-		inode_table[i].blocks[0]=dposition;
-		inode_table[i].single_indir_ptr=NULL;
-		inode_table[i].double_indir_ptr=NULL;
+		inode_table[iposition].type=IS_DIR;
+		inode_table[iposition].isOpen=IS_OPEN;//open it 
+		strcpy(inode_table[iposition].filename,token);
+		inode_table[iposition].parent=0;
+		inode_table[iposition].size=0;
+		inode_table[iposition].blocks[0]=dposition;
+		inode_table[iposition].single_indir_ptr=NULL;
+		inode_table[iposition].double_indir_ptr=NULL;
 
 		//writing back to disk
 		block_write(0,s);//write superblock back
